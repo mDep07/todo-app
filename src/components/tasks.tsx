@@ -1,5 +1,7 @@
 import React, { FormEvent, useState, useRef } from 'react';
 
+import TaskForm from './TaskForm';
+
 interface ITask {
   id: number;
   title: string;
@@ -21,15 +23,11 @@ export default function Tasks() {
   const [tasks, setTasks] = useState(listTasks)
   const inputRef = useRef<HTMLInputElement>(null)
   
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const createTask = (task: string) => {
     const lastId = tasks.map(t => t.id).sort().at(-1) || 0;
     const newId = lastId + 1;
-    if(inputRef.current && newId) {
-      const taskFather = taskActive !== 0 ? taskActive : undefined;
-      setTasks([...tasks, { id: newId, title: inputRef.current.value, create_date: '2021-12-01', finish: false, task_id: taskFather }])
-      inputRef.current.value = '';
-    }
+    const taskFather = taskActive !== 0 ? taskActive : undefined;
+    setTasks([...tasks, { id: newId, title: task, create_date: '2021-12-01', finish: false, task_id: taskFather }])
   }
 
   const handleDeleteTask = (taskId: number) => {
@@ -50,10 +48,7 @@ export default function Tasks() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input ref={inputRef} type="text" placeholder="Task..." />
-        <button type="submit">Add</button>
-      </form>
+      <TaskForm addTask={createTask} />
       <ul style={{ padding: '0', margin: '0' }}>
         {tasks.filter(t => !t.task_id).map(task => {
           return (
@@ -79,10 +74,7 @@ export default function Tasks() {
               </div>
               {taskActive === task.id &&
                 (<div style={{ padding: '5px' }}>
-                  <form onSubmit={handleSubmit}>
-                    <input ref={inputRef} type="text" placeholder="Task..." />
-                    <button type="submit">Add</button>
-                  </form>
+                  <TaskForm addTask={createTask} />
                   <ul>
                   {tasks.filter(t => t.task_id === task.id ).map(subtask => (
                       <li key={subtask.id} style={{ 
