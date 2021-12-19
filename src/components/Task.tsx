@@ -17,6 +17,10 @@ const StyledContainerTask = styled.li`
   &:not(.active):hover {
     box-shadow:  ${({ theme }: { theme: Theme }) => theme.shadow};
   }
+
+  &.child {
+    background-color: ${({ theme }: { theme: Theme }) => theme.body};
+  }
 `;
 
 const StyledTask = styled.div`
@@ -46,12 +50,14 @@ const StyledTask = styled.div`
 const StyledInput = styled.input`
   width: 1.25rem;
   height: 1.25rem;
+  cursor: pointer;
 `;
 
 const StyledTitle = styled.h3`
-  font-size: 1rem;
+  font-size: .9rem;
   margin: 0;
   color: ${({ theme }: { theme: Theme }) => theme.text};
+  font-weight: 600;
 `;
 
 const StyledDetails = styled.div`
@@ -66,10 +72,11 @@ type Params = {
     toggleActive?: (taskId: string) => void,
     finish: (taskId: string) => void,
     remove: (taskId: string) => void,
+    isChild?: boolean,
     children?: JSX.Element[] | JSX.Element | null
     
 };
-export default function Task({ task, isActive, toggleActive, finish, remove, children }: Params) {
+export default function Task({ task, isActive, toggleActive, finish, remove, isChild, children }: Params) {
 
     const ToggleActiveTask = () => {
         if(!toggleActive) return null;
@@ -81,16 +88,19 @@ export default function Task({ task, isActive, toggleActive, finish, remove, chi
         )
     }
     return (
-      <StyledContainerTask key={task.id}>
+      <StyledContainerTask key={task.id} className={isChild ? 'child' : ''}>
           <StyledTask>
             <div className="section__check">
               <StyledInput type="checkbox" onChange={() => finish(task.id)} checked={task.finish} />
             </div>
             <div className="section__body">
                 <StyledTitle>{task.title}</StyledTitle>
-                <StyledDetails>
-                  <small>Created: {moment(task.create_date).format('LLL')}</small>
-                </StyledDetails>
+                {
+                  !isChild && 
+                  <StyledDetails>
+                    <small>Created: {moment(task.create_date).format('LLL')}</small>
+                  </StyledDetails>
+                }
             </div>
             <div className="section__actions">
               <Button color="245, 66, 93" onClick={() => remove(task.id)}><IoClose /></Button>

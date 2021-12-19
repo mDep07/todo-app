@@ -55,6 +55,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
                   task={t}
                   finish={handleFinishTask}
                   remove={handleDeleteTask}
+                  isChild
                 />
               ))}
             </div>
