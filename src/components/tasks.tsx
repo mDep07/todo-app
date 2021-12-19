@@ -1,8 +1,9 @@
-import React, { FormEvent, useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import TaskForm from './TaskForm';
+import Task from './Task';
 
-interface ITask {
+export interface ITask {
   id: number;
   title: string;
   create_date: string;
@@ -20,8 +21,7 @@ const listTasks: ITask[] = [
 
 export default function Tasks() {
   //const intialState: ITask[] = []
-  const [tasks, setTasks] = useState(listTasks)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [tasks, setTasks] = useState(listTasks);
   
   const createTask = (task: string) => {
     const lastId = tasks.map(t => t.id).sort().at(-1) || 0;
@@ -37,71 +37,52 @@ export default function Tasks() {
   const handleFinishTask = (taskId: number) => {
     const taskIndex = tasks.findIndex(t => t.id === taskId);
     const task = tasks.find(t => t.id === taskId);
-    if(task) setTasks([...tasks.slice(0, taskIndex), {...task, finish: !task.finish }, ...tasks.slice(taskIndex + 1)])
+    if(task) {
+      setTasks([...tasks.slice(0, taskIndex), {...task, finish: !task.finish }, ...tasks.slice(taskIndex + 1)]);
+      if(!task.finish) {
+        const tasksChildren = tasks.filter(t => t.task_id === task.id);
+        console.log({tasksChildren, task})
+        tasksChildren.forEach(taskChild => handleFinishTask(taskChild.id))
+      }
+    }
   }
 
   const [taskActive, setTaskActive] = useState(0);
   const toggleTaskActive = (taskId: number) => {
     if(taskId === taskActive) setTaskActive(0);
     else setTaskActive(taskId);
-  } 
+  }
+
+  const getSubTasks = (taskId: number) => {
+    return tasks.filter(t => t.task_id === taskId);
+  }
 
   return (
     <div>
       <TaskForm addTask={createTask} />
       <ul style={{ padding: '0', margin: '0' }}>
-        {tasks.filter(t => !t.task_id).map(task => {
-          return (
-            <li key={task.id} style={{ 
-              border: '1px solid', 
-              margin: '5px 0',  
-            }}>
-              <div style={{
-                display: 'flex',
-              }}>
-                <div style={{ padding: '5px', }}>
-                  <input type="checkbox" onChange={() => handleFinishTask(task.id)} checked={task.finish} />
-                </div>
-                <div style={{ padding: '5px', flex: 5, }}>
-                  {task.id}) {task.title} - <small>Create: {task.create_date}</small>
-                </div>
-                <div style={{ padding: '5px',}}>
-                  <button onClick={() => handleDeleteTask(task.id)}>Delete</button>
-                  <button onClick={() => toggleTaskActive(task.id)}>
-                    {taskActive === task.id ? 'Hide' : 'Show'}
-                  </button>
-                </div>
-              </div>
-              {taskActive === task.id &&
-                (<div style={{ padding: '5px' }}>
-                  <TaskForm addTask={createTask} />
-                  <ul>
-                  {tasks.filter(t => t.task_id === task.id ).map(subtask => (
-                      <li key={subtask.id} style={{ 
-                        border: '1px solid', 
-                        margin: '5px 0',  
-                      }}>
-                        <div style={{
-                          display: 'flex',
-                        }}>
-                          <div style={{ padding: '5px', }}>
-                            <input type="checkbox" onChange={() => handleFinishTask(subtask.id)} checked={subtask.finish} />
-                          </div>
-                          <div style={{ padding: '5px', flex: 5, }}>
-                            {subtask.id}) {subtask.title} - <small>Create: {subtask.create_date}</small>
-                          </div>
-                          <div style={{ padding: '5px',}}>
-                            <button onClick={() => handleDeleteTask(subtask.id)}>Delete</button>
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>)
-              }
-            </li>
-          )
-        })}
+        {tasks.filter(t => !t.task_id).map(task => (
+          <Task 
+            key={task.id}
+            task={task} 
+            isActive={taskActive === task.id} 
+            toggleActive={toggleTaskActive} 
+            finish={handleFinishTask}
+            remove={handleDeleteTask}
+          >
+            <div style={{padding: 10}}>
+              <TaskForm addTask={createTask} />
+              {getSubTasks(task.id).map(t => (
+                <Task
+                  key={t.id}
+                  task={t}
+                  finish={handleFinishTask}
+                  remove={handleDeleteTask}
+                />
+              ))}
+            </div>
+          </Task>
+        ))}
       </ul>
     </div>
   ) 
