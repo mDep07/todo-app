@@ -1,14 +1,16 @@
 import React from 'react';
+import moment from 'moment';
+
 import TaskForm from './TaskForm';
 
-import { ITask } from './Tasks';
+import type { ITask } from '../App';
 
 type Params = { 
     task: ITask, 
     isActive?: boolean,
-    toggleActive?: (taskId: number) => void,
-    finish: (taskId: number) => void,
-    remove: (taskId: number) => void,
+    toggleActive?: (taskId: string) => void,
+    finish: (taskId: string) => void,
+    remove: (taskId: string) => void,
     children?: JSX.Element[] | JSX.Element | null
     
 };
@@ -35,7 +37,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, chi
                 <input type="checkbox" onChange={() => finish(task.id)} checked={task.finish} />
               </div>
               <div style={{ padding: '5px', flex: 5, }}>
-                {task.id}) {task.title} - <small>Create: {task.create_date}</small>
+                  <strong>{task.title}</strong> - <small>{moment(task.create_date).format('LLL')}</small>
               </div>
               <div style={{ padding: '5px',}}>
                 <button onClick={() => remove(task.id)}>Delete</button>

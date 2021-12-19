@@ -1,59 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
+import moment from 'moment';
 
+import type { ITask } from '../App';
 import TaskForm from './TaskForm';
 import Task from './Task';
 
-export interface ITask {
-  id: number;
-  title: string;
-  create_date: string;
-  finish: boolean;
-  task_id?: number;
-}
+type Params = { 
+  tasks: ITask[], 
+  create: (task: ITask) => void, 
+  finish: (taskId: string) => void, 
+  remove: (taskId: string) => void 
+};
 
-const listTasks: ITask[] = [
-  { id: 1, title: 'task 1', create_date: '2021-12-18', finish: false },
-  { id: 2, title: 'task 2', create_date: '2021-12-18', finish: false },
-  { id: 3, title: 'task 3', create_date: '2021-12-18', finish: false },
-  { id: 4, title: 'sub task 1 - 1', create_date: '2021-12-18', finish: false, task_id: 1 },
-  { id: 5, title: 'sub task 2 - 1', create_date: '2021-12-18', finish: false, task_id: 1 },
-]
-
-export default function Tasks() {
-  //const intialState: ITask[] = []
-  const [tasks, setTasks] = useState(listTasks);
+export default function Tasks({ tasks, create, finish, remove }: Params) {
+  //const [tasks, setTasks] = useState(listTasks);
   
-  const createTask = (task: string) => {
-    const lastId = tasks.map(t => t.id).sort().at(-1) || 0;
-    const newId = lastId + 1;
-    const taskFather = taskActive !== 0 ? taskActive : undefined;
-    setTasks([...tasks, { id: newId, title: task, create_date: '2021-12-01', finish: false, task_id: taskFather }])
-  }
-
-  const handleDeleteTask = (taskId: number) => {
-    setTasks([...tasks.filter(t => t.id !== taskId)])
-  }
-
-  const handleFinishTask = (taskId: number) => {
-    const taskIndex = tasks.findIndex(t => t.id === taskId);
-    const task = tasks.find(t => t.id === taskId);
-    if(task) {
-      setTasks([...tasks.slice(0, taskIndex), {...task, finish: !task.finish }, ...tasks.slice(taskIndex + 1)]);
-      if(!task.finish) {
-        const tasksChildren = tasks.filter(t => t.task_id === task.id);
-        console.log({tasksChildren, task})
-        tasksChildren.forEach(taskChild => handleFinishTask(taskChild.id))
-      }
-    }
-  }
-
-  const [taskActive, setTaskActive] = useState(0);
-  const toggleTaskActive = (taskId: number) => {
-    if(taskId === taskActive) setTaskActive(0);
+  const [taskActive, setTaskActive] = useState('');
+  const toggleTaskActive = (taskId: string) => {
+    if(taskId === taskActive) setTaskActive('');
     else setTaskActive(taskId);
   }
 
-  const getSubTasks = (taskId: number) => {
+  const createTask = (task: string) => {
+    const taskFather = taskActive !== '' ? taskActive : undefined;
+    create({ id: '', title: task, create_date: moment().format(), finish: false, task_id: taskFather });
+  }
+
+  const handleDeleteTask = (taskId: string) => remove(taskId);
+
+  const handleFinishTask = (taskId: string) => finish(taskId);
+
+  const getSubTasks = (taskId: string) => {
     return tasks.filter(t => t.task_id === taskId);
   }
 
