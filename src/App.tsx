@@ -1,6 +1,9 @@
-import React, { useReducer, Reducer } from 'react';
+import React, { useReducer, Reducer, useState } from 'react';
 //import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
+import styled, { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from "./components/GlobalStyles";
+import { lightTheme, darkTheme } from "./components/Themes"
 
 import Tasks from './components/Tasks';
 
@@ -82,20 +85,33 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
   }
 }
 
+const StyledContainer = styled.main`
+  padding: 1rem;
+`;
+
 function App() {
 
   const [state, dispatch] = useReducer(reducer, { tasks: listTasks });
+  
+  const [theme, setTheme] = useState('light');
+  const themeToggler = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light')
+  }
 
   return (
-    <div style={{ padding: '1rem' }}>
-      <h1>Todo App</h1>
-      <Tasks 
-        tasks={state.tasks} 
-        create={(task: ITask) => dispatch({ type: 'add', payload: task })}
-        finish={(taskId: string) => dispatch({ type: 'finish', payload: taskId })}
-        remove={(taskId: string) => dispatch({ type: 'remove', payload: taskId })}
-      />
-    </div>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <GlobalStyles/>
+      <StyledContainer>
+        <button onClick={themeToggler}>Switch Theme</button>
+        <h1>Todo App</h1>
+        <Tasks 
+          tasks={state.tasks} 
+          create={(task: ITask) => dispatch({ type: 'add', payload: task })}
+          finish={(taskId: string) => dispatch({ type: 'finish', payload: taskId })}
+          remove={(taskId: string) => dispatch({ type: 'remove', payload: taskId })}
+        />
+      </StyledContainer>
+    </ThemeProvider>
   );
 }
 

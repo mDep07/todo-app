@@ -1,8 +1,64 @@
 import React from 'react';
 import moment from 'moment';
 import { IoClose, IoChevronDown, IoChevronUp } from "react-icons/io5";
+import styled from 'styled-components';
 
 import type { ITask } from '../App';
+import Button from './Button';
+import type { Theme } from './Themes';
+
+const StyledContainerTask = styled.li`
+  list-style-type: none;
+  padding: none;
+  margin-bottom: 7px;
+  background-color: ${({ theme }: { theme: Theme }) => theme.cardBgColor};
+  border-radius: 10px;
+  transition: all .5s linear;
+  &:not(.active):hover {
+    box-shadow:  ${({ theme }: { theme: Theme }) => theme.shadow};
+  }
+`;
+
+const StyledTask = styled.div`
+  display: flex;
+  padding: 4px;
+  & .section__check {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & .section__body {
+    flex: 7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  & .section__actions {
+    flex: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+`;
+
+const StyledInput = styled.input`
+  width: 1.25rem;
+  height: 1.25rem;
+`;
+
+const StyledTitle = styled.h3`
+  font-size: 1rem;
+  margin: 0;
+  color: ${({ theme }: { theme: Theme }) => theme.text};
+`;
+
+const StyledDetails = styled.div`
+  & small {
+    color: #7c7c7c
+  }
+`;
 
 type Params = { 
     task: ITask, 
@@ -19,58 +75,29 @@ export default function Task({ task, isActive, toggleActive, finish, remove, chi
         if(!toggleActive) return null;
         
         return (
-            <button onClick={() => toggleActive(task.id)}>
+            <Button color="189, 189, 189" onClick={() => toggleActive(task.id)}>
                 {isActive ? <IoChevronUp /> : <IoChevronDown /> }
-            </button>
+            </Button>
         )
     }
     return (
-        <li key={task.id} style={{ 
-            border: '1px solid', 
-            margin: '5px 0',  
-          }}>
-            <div style={{
-              display: 'flex',
-            }}>
-              <div style={{ padding: '5px', }}>
-                <input type="checkbox" onChange={() => finish(task.id)} checked={task.finish} />
-              </div>
-              <div style={{ padding: '5px', flex: 5, }}>
-                  <strong>{task.title}</strong> - <small>{moment(task.create_date).format('LLL')}</small>
-              </div>
-              <div style={{ padding: '5px',}}>
-                <button onClick={() => remove(task.id)}><IoClose /></button>
-                <ToggleActiveTask />
-              </div>
+      <StyledContainerTask key={task.id}>
+          <StyledTask>
+            <div className="section__check">
+              <StyledInput type="checkbox" onChange={() => finish(task.id)} checked={task.finish} />
             </div>
-            {isActive && children}
-            {/* {isActive &&
-              (<div style={{ padding: '5px' }}>
-                <TaskForm addTask={createTask} />
-                <ul>
-                {tasks.filter(t => t.task_id === task.id ).map(subtask => (
-                    <li key={subtask.id} style={{ 
-                      border: '1px solid', 
-                      margin: '5px 0',  
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                      }}>
-                        <div style={{ padding: '5px', }}>
-                          <input type="checkbox" onChange={() => finish(subtask.id)} checked={subtask.finish} />
-                        </div>
-                        <div style={{ padding: '5px', flex: 5, }}>
-                          {subtask.id}) {subtask.title} - <small>Create: {subtask.create_date}</small>
-                        </div>
-                        <div style={{ padding: '5px',}}>
-                          <button onClick={() => remove(subtask.id)}>Delete</button>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>)
-            } */}
-          </li>
+            <div className="section__body">
+                <StyledTitle>{task.title}</StyledTitle>
+                <StyledDetails>
+                  <small>Created: {moment(task.create_date).format('LLL')}</small>
+                </StyledDetails>
+            </div>
+            <div className="section__actions">
+              <Button color="245, 66, 93" onClick={() => remove(task.id)}><IoClose /></Button>
+              <ToggleActiveTask />
+            </div>
+          </StyledTask>
+          {isActive && children}
+      </StyledContainerTask>
     )
 }
