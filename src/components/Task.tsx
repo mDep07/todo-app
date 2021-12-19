@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-
-import TaskForm from './TaskForm';
+import { IoClose, IoChevronDown, IoChevronUp } from "react-icons/io5";
 
 import type { ITask } from '../App';
 
@@ -21,7 +20,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, chi
         
         return (
             <button onClick={() => toggleActive(task.id)}>
-                {isActive ? 'Hide' : 'Show'}
+                {isActive ? <IoChevronUp /> : <IoChevronDown /> }
             </button>
         )
     }
@@ -40,7 +39,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, chi
                   <strong>{task.title}</strong> - <small>{moment(task.create_date).format('LLL')}</small>
               </div>
               <div style={{ padding: '5px',}}>
-                <button onClick={() => remove(task.id)}>Delete</button>
+                <button onClick={() => remove(task.id)}><IoClose /></button>
                 <ToggleActiveTask />
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useRef, FormEvent } from 'react';
+import { IoCheckmark } from "react-icons/io5";
 
 type Params = { addTask: (task: string) => void }
 export default function TaskForm({ addTask }: Params) {
@@ -14,7 +15,7 @@ export default function TaskForm({ addTask }: Params) {
     return (
         <form onSubmit={handleSubmit}>
             <input ref={inputRef} type="text" placeholder="Add new Task..." required />
-            <button type="submit">Add</button>
+            <button type="submit"><IoCheckmark /></button>
         </form>
     )
 }
