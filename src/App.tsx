@@ -73,10 +73,21 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
       const task = tasks.find(t => t.id === taskId);
 
       if(!task) return state;
-      // if(!task.finish) {
-      //   const tasksChildren = tasks.filter(t => t.task_id === task.id);
-      //   if(tasksChildren.length > 0) tasksChildren.forEach(taskChild => handleFinishTask(taskChild.id))
-      // }
+
+      if(!task.finished) {
+        const finishedTasks = tasks.filter(t => t.task_id === taskId || t.id === taskId).map(t => t.id);
+        return {
+          ...state,
+          tasks: tasks.map(task => {
+            if(finishedTasks.includes(task.id)) {
+              task.finished = true;
+              task.finished_date = moment().format();
+            }
+
+            return task;
+          })
+        };
+      }
 
       return {
         ...state,
