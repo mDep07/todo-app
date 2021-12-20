@@ -13,7 +13,9 @@ const StyledContainerTask = styled.li`
   margin-bottom: 7px;
   border-radius: 10px;
   background-color: ${({ theme }: { theme: Theme }) => theme.backgrounColorSecondary};
+  height: auto;
   transition: all .5s linear;
+
   &:not(.active):hover {
     box-shadow:  ${({ theme }: { theme: Theme }) => theme.principalShadow};
   }
@@ -47,14 +49,13 @@ const StyledTask = styled.div`
   }
 
   @media(min-width: 500px) {
-    & .section__actions {
-      transition: transform .15s ease-in-out;
-      transform-origin: center;
-      transform: scale(0);
+    & .section__actions:not(.active) > button {
+      transition: opacity .25s ease-in-out;
+      opacity: 0;
     }
 
-    &:hover .section__actions {
-      transform: scale(1);
+    &:hover .section__actions > button {
+      opacity: 1;
     }
   }
 `;
@@ -130,7 +131,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
             <div className="section__body">
                 <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
             </div>
-            <div className="section__actions">
+            <div className={`section__actions ${isActive ? 'active' : ''}`}>
               <Button disabled={disabled} color="245, 66, 93" onClick={() => remove(task.id)}>
                 <IoClose />
               </Button>
