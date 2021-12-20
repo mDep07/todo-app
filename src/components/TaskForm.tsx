@@ -27,7 +27,7 @@ const StyledInput = styled.input`
     }
 
     &:disabled {
-        filter: brightness(.25);
+        filter: brightness(.75);
         cursor: not-allowed;
     }
 `;

@@ -103,6 +103,9 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
 
 const StyledContainer = styled.main`
   padding: 1rem;
+  max-width: 550px;
+  margin: 0 auto;
+  overflow-y: auto;
 `;
 
 function App() {
