@@ -23,7 +23,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
   const createTask = (task: string) => {
     const taskFather = taskActive !== '' ? taskActive : undefined;
-    create({ id: '', title: task, create_date: moment().format(), finish: false, task_id: taskFather });
+    create({ id: '', title: task, create_date: moment().format(), finished: false, task_id: taskFather });
   }
 
   const handleDeleteTask = (taskId: string) => remove(taskId);

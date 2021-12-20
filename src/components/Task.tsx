@@ -53,11 +53,12 @@ const StyledInput = styled.input`
   cursor: pointer;
 `;
 
-const StyledTitle = styled.h3`
+const StyledTitle = styled.h3<{ finished: boolean }>`
   font-size: .9rem;
   margin: 0;
   color: ${({ theme }: { theme: Theme }) => theme.text};
   font-weight: 600;
+  ${({finished}) => finished ? 'text-decoration:line-through;color:#7c7c7c' : ''}
 `;
 
 const StyledDetails = styled.div`
@@ -91,15 +92,15 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
       <StyledContainerTask key={task.id} className={isChild ? 'child' : ''}>
           <StyledTask>
             <div className="section__check">
-              <StyledInput type="checkbox" onChange={() => finish(task.id)} checked={task.finish} />
+              <StyledInput type="checkbox" onChange={() => finish(task.id)} checked={task.finished} />
             </div>
             <div className="section__body">
-                <StyledTitle>{task.title}</StyledTitle>
+                <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
                 {
                   !isChild && 
                   <StyledDetails>
                     <small>{moment(task.create_date).format('lll')}</small>
-                    {task.finish_date && <small>{' || '}{moment(task.finish_date).format('lll')}</small>}
+                    {task.finished_date && <small>{' || '}{moment(task.finished_date).format('lll')}</small>}
                   </StyledDetails>
                 }
             </div>

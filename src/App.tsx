@@ -12,18 +12,18 @@ export interface ITask {
   id: string;
   title: string;
   create_date: string;
-  finish: boolean;
+  finished: boolean;
   task_id?: string;
-  finish_date?: string;
+  finished_date?: string;
   expiration_date?: string;
 }
 
 const listTasks: ITask[] = [
-  { id: uuidv4(), title: 'task 1', create_date: '2021-12-18', finish: false },
-  { id: uuidv4(), title: 'task 2', create_date: '2021-12-18', finish: false },
-  { id: uuidv4(), title: 'task 3', create_date: '2021-12-18', finish: false },
-  { id: uuidv4(), title: 'sub task 1 - 1', create_date: '2021-12-18', finish: false },
-  { id: uuidv4(), title: 'sub task 2 - 1', create_date: '2021-12-18', finish: false, },
+  { id: uuidv4(), title: 'task 1', create_date: '2021-12-18', finished: false },
+  { id: uuidv4(), title: 'task 2', create_date: '2021-12-18', finished: false },
+  { id: uuidv4(), title: 'task 3', create_date: '2021-12-18', finished: false },
+  { id: uuidv4(), title: 'sub task 1 - 1', create_date: '2021-12-18', finished: false },
+  { id: uuidv4(), title: 'sub task 2 - 1', create_date: '2021-12-18', finished: false, },
 ]
 
 type TState = { tasks: ITask[] };
@@ -44,7 +44,7 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
         id: uuidv4(), 
         title: task.title, 
         create_date: task.create_date, 
-        finish: false, 
+        finished: false, 
         task_id: task.task_id 
       };
       return {
@@ -80,7 +80,7 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
         ...state,
         tasks: [
           ...tasks.slice(0, taskIndex), 
-          {...task, finish: !task.finish, finish_date: moment().format() }, 
+          {...task, finished: !task.finished, finished_date: !task.finished ? moment().format() : '' }, 
           ...tasks.slice(taskIndex + 1)
         ]
       };
