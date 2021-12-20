@@ -48,7 +48,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
             remove={handleDeleteTask}
           >
             <div style={{padding: 10}}>
-              <TaskForm addTask={createTask} />
+              <TaskForm addTask={createTask} disabled={task.finished} />
               {getSubTasks(task.id).map(t => (
                 <Task
                   key={t.id}

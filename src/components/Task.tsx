@@ -62,8 +62,11 @@ const StyledTitle = styled.h3<{ finished: boolean }>`
 `;
 
 const StyledDetails = styled.div`
-  & small {
-    color: #7c7c7c
+  padding: 0 20px;
+  & p {
+    color: #7c7c7c;
+    font-size: small;
+    margin: 0;
   }
 `;
 
@@ -88,6 +91,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
             </Button>
         )
     }
+
     return (
       <StyledContainerTask key={task.id} className={isChild ? 'child' : ''}>
           <StyledTask>
@@ -96,20 +100,25 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
             </div>
             <div className="section__body">
                 <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
-                {
-                  !isChild && 
-                  <StyledDetails>
-                    <small>{moment(task.create_date).format('lll')}</small>
-                    {task.finished_date && <small>{' || '}{moment(task.finished_date).format('lll')}</small>}
-                  </StyledDetails>
-                }
             </div>
             <div className="section__actions">
               <Button color="245, 66, 93" onClick={() => remove(task.id)}><IoClose /></Button>
               <ToggleActiveTask />
             </div>
           </StyledTask>
-          {isActive && children}
+          {
+            isActive &&
+            <React.Fragment>
+              {
+                !isChild && 
+                <StyledDetails>
+                  <p>{moment(task.create_date).format('lll')}</p>
+                  {task.finished_date && <p>{moment(task.finished_date).fromNow()}</p>}
+                </StyledDetails>
+              }
+              {children}
+            </React.Fragment>
+          }
       </StyledContainerTask>
     )
 }

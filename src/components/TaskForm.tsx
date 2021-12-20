@@ -20,6 +20,7 @@ const StyledInput = styled.input`
     font-size: 1rem;
     background-color: ${({ theme }: { theme: Theme }) => theme.cardBgColor};
     color: ${({ theme }: { theme: Theme }) => theme.text};
+    transition: all .5s linear;
 
     &:focus {
         outline: none;
