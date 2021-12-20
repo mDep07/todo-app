@@ -12,10 +12,10 @@ const StyledContainerTask = styled.li`
   padding: none;
   margin-bottom: 7px;
   border-radius: 10px;
-  background-color: ${({ theme }: { theme: Theme }) => theme.cardBgColor};
+  background-color: ${({ theme }: { theme: Theme }) => theme.backgrounColorSecondary};
   transition: all .5s linear;
   &:not(.active):hover {
-    box-shadow:  ${({ theme }: { theme: Theme }) => theme.shadow};
+    box-shadow:  ${({ theme }: { theme: Theme }) => theme.principalShadow};
   }
 
   &.child {

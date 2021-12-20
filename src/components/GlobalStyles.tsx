@@ -7,5 +7,6 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }: { theme: Theme }) => theme.text};
     font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif;
     transition: background 0.50s linear, color 0.50s linear;
+    background-image: ${({ theme }: { theme: Theme }) => theme.backgroundImage}
   }
   `

@@ -2,8 +2,10 @@ import React, { useReducer, Reducer, useState } from 'react';
 //import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import styled, { ThemeProvider } from 'styled-components';
+import { IoMoon, IoSunny } from 'react-icons/io5';
+
 import { GlobalStyles } from "./components/GlobalStyles";
-import { lightTheme, darkTheme } from "./components/Themes"
+import { lightTheme, darkTheme, Theme } from "./components/Themes";
 
 import Tasks from './components/Tasks';
 import moment from 'moment';
@@ -102,10 +104,29 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
 }
 
 const StyledContainer = styled.main`
+  background-color: ${({ theme }: { theme: Theme }) => theme.body};
   padding: 1rem;
   max-width: 550px;
+  min-height: calc(100vh - 2rem);
   margin: 0 auto;
   overflow-y: auto;
+`;
+
+const StyledSwitchTheme = styled.button`
+    border: none;
+    padding: 4px;
+    background-color: transparent;
+    color: darkgray;
+    font-size: 2rem;
+    display: flex;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.05);
+    }
+    &:active {
+      transform: scale(.95);
+    }
 `;
 
 function App() {
@@ -122,7 +143,9 @@ function App() {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyles/>
       <StyledContainer>
-        <button onClick={themeToggler}>Switch Theme</button>
+        <StyledSwitchTheme title="Change theme mode" onClick={themeToggler}>
+          { theme === 'light' ? <IoMoon /> : <IoSunny /> }
+        </StyledSwitchTheme>
         <h1>Todo App</h1>
         <Tasks 
           tasks={state.tasks} 

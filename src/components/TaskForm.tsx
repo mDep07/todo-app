@@ -18,7 +18,7 @@ const StyledInput = styled.input`
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    background-color: ${({ theme }: { theme: Theme }) => theme.cardBgColor};
+    background-color: ${({ theme }: { theme: Theme }) => theme.backgrounColorSecondary};
     color: ${({ theme }: { theme: Theme }) => theme.text};
     transition: all .5s linear;
 
