@@ -45,6 +45,16 @@ const StyledTask = styled.div`
     justify-content: flex-end;
     align-items: center;
   }
+
+  @media(min-width: 500px) {
+    & .section__actions {
+      transform: scale(0);
+    }
+
+    &:hover .section__actions {
+      transform: scale(1);
+    }
+  }
 `;
 
 const StyledInput = styled.input`
