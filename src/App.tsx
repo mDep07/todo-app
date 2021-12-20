@@ -6,6 +6,7 @@ import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme } from "./components/Themes"
 
 import Tasks from './components/Tasks';
+import moment from 'moment';
 
 export interface ITask {
   id: string;
@@ -13,6 +14,8 @@ export interface ITask {
   create_date: string;
   finish: boolean;
   task_id?: string;
+  finish_date?: string;
+  expiration_date?: string;
 }
 
 const listTasks: ITask[] = [
@@ -77,7 +80,7 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
         ...state,
         tasks: [
           ...tasks.slice(0, taskIndex), 
-          {...task, finish: !task.finish }, 
+          {...task, finish: !task.finish, finish_date: moment().format() }, 
           ...tasks.slice(taskIndex + 1)
         ]
       };

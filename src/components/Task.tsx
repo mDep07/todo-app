@@ -98,7 +98,8 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
                 {
                   !isChild && 
                   <StyledDetails>
-                    <small>Created: {moment(task.create_date).format('LLL')}</small>
+                    <small>{moment(task.create_date).format('lll')}</small>
+                    {task.finish_date && <small>{' || '}{moment(task.finish_date).format('lll')}</small>}
                   </StyledDetails>
                 }
             </div>
