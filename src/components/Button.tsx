@@ -20,8 +20,13 @@ const StyledButton = styled.button`
     }
 
     &:active {
-        box-shadow: inset 0 1px 2px rgba(var(--color), .9);
+        /* box-shadow: inset 0 1px 2px rgba(var(--color), .9); */
         transform: scale(0.9);
+    }
+
+    &:disabled {
+        filter: brightness(.25);
+        cursor: not-allowed;
     }
 `;
 

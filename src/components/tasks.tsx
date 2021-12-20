@@ -36,7 +36,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
   return (
     <div>
-      <TaskForm addTask={createTask} />
+      <TaskForm addTask={createTask} disabled={taskActive !== ''} />
       <ul style={{ padding: '0', margin: '0' }}>
         {tasks.filter(t => !t.task_id).map(task => (
           <Task 

@@ -11,8 +11,8 @@ const StyledContainerTask = styled.li`
   list-style-type: none;
   padding: none;
   margin-bottom: 7px;
-  background-color: ${({ theme }: { theme: Theme }) => theme.cardBgColor};
   border-radius: 10px;
+  background-color: ${({ theme }: { theme: Theme }) => theme.cardBgColor};
   transition: all .5s linear;
   &:not(.active):hover {
     box-shadow:  ${({ theme }: { theme: Theme }) => theme.shadow};
