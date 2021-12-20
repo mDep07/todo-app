@@ -57,9 +57,11 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
       const taskId = payload;
       if(typeof taskId !== 'string') return state;
 
+      const removeTasks = tasks.filter(t => t.task_id === taskId || t.id === taskId).map(t => t.id);
+
       return {
         ...state,
-        tasks: [...tasks.filter(t => t.id !== taskId)]
+        tasks: [...tasks.filter(t => !removeTasks.includes(t.id))]
       };
     }
     case 'finish': {
