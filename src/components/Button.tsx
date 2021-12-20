@@ -1,7 +1,8 @@
 import { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+
+const StyledButton = styled.button<{ color?: string }>`
     --color: ${({ color }) => color ? color : '255, 99, 71'};
     background-color: rgba(var(--color), .25);
     margin: 4px;
@@ -16,12 +17,11 @@ const StyledButton = styled.button`
     align-items: center;
 
     &:hover {
-        box-shadow: 0 1px 2px rgba(var(--color), .7);
+        transform: scale(1.05);
     }
 
     &:active {
-        /* box-shadow: inset 0 1px 2px rgba(var(--color), .9); */
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
 
     &:disabled {
@@ -30,6 +30,18 @@ const StyledButton = styled.button`
     }
 `;
 
-export default function Button(props: ButtonHTMLAttributes<HTMLButtonElement>) {
+const StyledSmallButton = styled(StyledButton)`
+    padding: 2px 8px;
+    font-size: .9rem;
+    &:hover, &:active {
+        transform: scale(1);
+    }
+`;
+
+// ${({small}) => small ? '.9rem' : '1.5rem' };
+type ButtonProps = { color?: string, small?: boolean };
+export default function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps) {
+    if(props.small) return <StyledSmallButton {...props} />
+
     return <StyledButton {...props} />
 }

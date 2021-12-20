@@ -51,6 +51,10 @@ const StyledInput = styled.input`
   width: 1.25rem;
   height: 1.25rem;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const StyledTitle = styled.h3<{ finished: boolean }>`
@@ -77,10 +81,11 @@ type Params = {
     finish: (taskId: string) => void,
     remove: (taskId: string) => void,
     isChild?: boolean,
+    disabled?: boolean,
     children?: JSX.Element[] | JSX.Element | null
     
 };
-export default function Task({ task, isActive, toggleActive, finish, remove, isChild, children }: Params) {
+export default function Task({ task, isActive, toggleActive, finish, remove, isChild, disabled, children }: Params) {
 
     const ToggleActiveTask = () => {
         if(!toggleActive) return null;
@@ -96,13 +101,20 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
       <StyledContainerTask key={task.id} className={isChild ? 'child' : ''}>
           <StyledTask>
             <div className="section__check">
-              <StyledInput type="checkbox" onChange={() => finish(task.id)} checked={task.finished} />
+              <StyledInput 
+                disabled={disabled} 
+                type="checkbox" 
+                onChange={() => finish(task.id)} 
+                checked={task.finished} 
+              />
             </div>
             <div className="section__body">
                 <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
             </div>
             <div className="section__actions">
-              <Button color="245, 66, 93" onClick={() => remove(task.id)}><IoClose /></Button>
+              <Button disabled={disabled} color="245, 66, 93" onClick={() => remove(task.id)}>
+                <IoClose />
+              </Button>
               <ToggleActiveTask />
             </div>
           </StyledTask>

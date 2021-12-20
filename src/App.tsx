@@ -19,11 +19,11 @@ export interface ITask {
 }
 
 const listTasks: ITask[] = [
-  { id: uuidv4(), title: 'task 1', create_date: '2021-12-18', finished: false },
-  { id: uuidv4(), title: 'task 2', create_date: '2021-12-18', finished: false },
-  { id: uuidv4(), title: 'task 3', create_date: '2021-12-18', finished: false },
-  { id: uuidv4(), title: 'sub task 1 - 1', create_date: '2021-12-18', finished: false },
-  { id: uuidv4(), title: 'sub task 2 - 1', create_date: '2021-12-18', finished: false, },
+  { id: uuidv4(), title: 'task 1', create_date: moment().subtract(1,'days').format(), finished: false },
+  { id: uuidv4(), title: 'task 2', create_date: moment().subtract(1,'days').format(), finished: false },
+  { id: uuidv4(), title: 'task 3', create_date: moment().subtract(1,'days').format(), finished: false },
+  { id: uuidv4(), title: 'sub task 1 - 1', create_date: moment().subtract(1,'days').format(), finished: false },
+  { id: uuidv4(), title: 'sub task 2 - 1', create_date: moment().subtract(1,'days').format(), finished: false, },
 ]
 
 type TState = { tasks: ITask[] };
@@ -96,9 +96,10 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, { tasks: listTasks });
   
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const themeToggler = () => {
-    theme === 'light' ? setTheme('dark') : setTheme('light')
+   setTheme(theme === 'light' ? 'dark' : 'light')
+   localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
   }
 
   return (
