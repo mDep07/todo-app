@@ -48,6 +48,8 @@ const StyledTask = styled.div`
 
   @media(min-width: 500px) {
     & .section__actions {
+      transition: transform .15s ease-in-out;
+      transform-origin: center;
       transform: scale(0);
     }
 
