@@ -52,6 +52,13 @@ const StyledInput = styled.input`
   height: 1.25rem;
   cursor: pointer;
 
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:active {
+    transform: scale(.95);
+  }
+
   &:disabled {
     cursor: not-allowed;
   }
@@ -61,7 +68,7 @@ const StyledTitle = styled.h3<{ finished: boolean }>`
   font-size: .9rem;
   margin: 0;
   color: ${({ theme }: { theme: Theme }) => theme.text};
-  font-weight: 600;
+  font-weight: 500;
   ${({finished}) => finished ? 'text-decoration:line-through;color:#7c7c7c' : ''}
 `;
 

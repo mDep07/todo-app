@@ -45,7 +45,14 @@ export default function TaskForm({ addTask, disabled }: Params) {
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            <StyledInput disabled={disabled} ref={inputRef} type="text" placeholder="Add new Task..." required />
+            <StyledInput 
+                type="text" 
+                ref={inputRef} 
+                maxLength={60} 
+                disabled={disabled} 
+                placeholder="Add new Task..." 
+                required 
+            />
             <Button disabled={disabled} type="submit"><IoCheckmark /></Button>
         </StyledForm>
     )
