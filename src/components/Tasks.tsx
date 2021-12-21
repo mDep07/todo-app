@@ -43,15 +43,17 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
   }
 
   const [showGroupedTasks, setShowGroupedTasks] = useState(['today', 'pending', 'overdue']);
-  const toggleShowGroupedTasks = (groupedTask: string) => {
+  const toggleShowGroupedTasks = (groupedTask: 'today' | 'pending' | 'overdue') => {
     if(!showGroupedTasks.includes(groupedTask)) {
-      setShowGroupedTasks([...showGroupedTasks,groupedTask])
+      setShowGroupedTasks([...showGroupedTasks, groupedTask])
     } else {
       const groupedTasksIndex = showGroupedTasks.indexOf(groupedTask);
       setShowGroupedTasks([
         ...showGroupedTasks.slice(0, groupedTasksIndex), 
         ...showGroupedTasks.slice(groupedTasksIndex + 1)
-      ])
+      ]);
+
+      if(groupedTasks[groupedTask].findIndex(t => t.id === taskActive) !== -1) toggleTaskActive('');
     }
   }
 
