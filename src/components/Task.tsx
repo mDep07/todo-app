@@ -3,7 +3,7 @@ import moment from 'moment';
 import { IoClose, IoChevronDown, IoChevronUp } from "react-icons/io5";
 import styled from 'styled-components';
 
-import type { ITask } from '../App';
+import type { ITask } from '../interfaces/task';
 import Button from './Button';
 import type { Theme } from './Themes';
 

@@ -7,18 +7,11 @@ import { IoMoon, IoSunny } from 'react-icons/io5';
 import { GlobalStyles } from "./components/GlobalStyles";
 import { lightTheme, darkTheme, Theme } from "./components/Themes";
 
+import type { ITask } from './interfaces/task';
+
 import Tasks from './components/Tasks';
 import moment from 'moment';
 
-export interface ITask {
-  id: string;
-  title: string;
-  create_date: string;
-  finished: boolean;
-  task_id?: string;
-  finished_date?: string;
-  expiration_date?: string;
-}
 
 const listTasks: ITask[] = [
   { id: uuidv4(), title: 'task 1', create_date: moment().subtract(1,'days').format(), finished: false },
@@ -135,8 +128,8 @@ function App() {
   
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const themeToggler = () => {
-   setTheme(theme === 'light' ? 'dark' : 'light')
-   localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
+    setTheme(theme === 'light' ? 'dark' : 'light')
+    localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
   }
 
   return (

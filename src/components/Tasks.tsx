@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 
-import type { ITask } from '../App';
+import type { ITask } from '../interfaces/task';
+
 import TaskForm from './TaskForm';
 import Task from './Task';
 import Button from './Button';
