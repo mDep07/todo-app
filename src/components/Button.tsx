@@ -1,5 +1,27 @@
 import { ButtonHTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+
+const buttonWithIcon = css`
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 2px !important;
+    padding-left: 6px !important;
+    padding-bottom: 2px !important;
+    padding-right: 2px !important;
+
+    &.icon-left {
+        padding-left: 2px !important;
+        padding-right: 6px !important;
+    }
+
+    & > svg {
+        background-color: rgba(255,255,255,.1);
+        padding: 2px;
+        border-radius: 100px;
+    }
+`;
 
 type Props = { color?: 'main' | 'secondary' | 'danger' | 'info' | 'warning', icon?: boolean };
 const StyledButton = styled.button<Props>`
@@ -31,9 +53,7 @@ const StyledButton = styled.button<Props>`
         cursor: not-allowed;
     }
 
-    & > svg {
-        ${({icon}) => !icon && `margin-left:5px;background:rgba(255,255,255,.15);border-radius:10px`}
-    }
+    ${({icon}) => icon ? buttonWithIcon : ''}
 `;
 
 const StyledSmallButton = styled(StyledButton)`

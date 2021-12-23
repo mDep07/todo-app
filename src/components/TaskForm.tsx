@@ -50,6 +50,8 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
     }
 
     const MakeImportantButton = ({label}: {label?: boolean}) => {
+        if(!showMoreConfig) return null
+
         return ( 
             <Button 
                 check 
@@ -57,12 +59,12 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
                 disabled={disabled} 
                 type="button" 
                 title={important ? 'Make not important' : 'Make important' }
-                className={`${important ? 'active' : ''} ${label && 'small'}`}
-                icon={!label}
-                onClick={() => setImportant(!important)}            
+                className={`${important ? 'active' : ''} ${label && 'small'} icon-left`}
+                onClick={() => setImportant(!important)}
+                icon={label}  
             >
-                <IoAlert />
-                {label ? (important ? 'Make not important' : 'Make important') : null }
+                <IoAlert className="left" />
+                {label ? (important ? 'Important' : 'Make important') : null }
             </Button>
         )
     }
@@ -80,7 +82,7 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
                     required 
                 />
                 { !showConfig ? <MakeImportantButton  /> : null }
-                <Button icon color="main" disabled={disabled} type="submit" title="Create task">
+                <Button color="main" disabled={disabled} type="submit" title="Create task">
                     <IoCheckmark />
                 </Button>
             </StyledSection>
