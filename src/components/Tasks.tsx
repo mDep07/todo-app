@@ -71,7 +71,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
   return (
     <div>
-      <TaskForm addTask={createTask} disabled={taskActive !== ''} />
+      <TaskForm addTask={createTask} disabled={taskActive !== ''} showMoreConfig />
       {
         Object.keys(groupedTasks).map((g, index) => {
 

@@ -1,6 +1,6 @@
-import React, { useRef, FormEvent } from 'react';
+import React, { useRef, FormEvent, useState } from 'react';
 import styled from 'styled-components';
-import { IoCheckmark } from "react-icons/io5";
+import { IoCheckmark, IoAlert } from "react-icons/io5";
 
 import Button from './Button';
 
@@ -8,6 +8,9 @@ const StyledForm = styled.form`
     margin-bottom: 7px;
     border-radius: 10px;
     padding: 5px;
+`;
+
+const StyledSection = styled.section`
     display: flex;
 `;
 
@@ -33,18 +36,23 @@ const StyledInput = styled.input`
 
 type Params = { addTask: (task: string) => void, disabled?: boolean, showMoreConfig?: boolean }
 export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) {
+    const [showConfig, setShowConfig] = useState(false);
+    const [important, setImportant] = useState(false);
+
+
     const inputRef = useRef<HTMLInputElement>(null)
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        if(!inputRef.current) return;
+        if(!inputRef.current?.value) return;
 
         addTask(inputRef.current.value);
         inputRef.current.value = '';        
     }
 
+
     return (
         <StyledForm onSubmit={handleSubmit}>
-            <div>
+            <StyledSection>
                 <StyledInput 
                     type="text" 
                     ref={inputRef} 
@@ -53,10 +61,35 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
                     placeholder="Add new Task..." 
                     required 
                 />
-                <Button color="main" disabled={disabled} type="submit">
+                <Button 
+                    check 
+                    color="main" 
+                    disabled={disabled} 
+                    type="button" 
+                    title={important ? 'Make not important' : 'Make important' }
+                    className={important ? 'active' : ''}
+                    onClick={() => setImportant(!important)}
+                >
+                    <IoAlert />
+                </Button>
+                <Button color="main" disabled={disabled} type="submit" title="Create task">
                     <IoCheckmark />
                 </Button>
-            </div>
+            </StyledSection>
+            {
+                showConfig && 
+                <StyledSection>
+                    <p>More Configs</p>
+                </StyledSection>
+            }
+            {
+                showMoreConfig && 
+                <div>
+                    <Button link type="button" onClick={() => setShowConfig(!showConfig)}>
+                        {showConfig ? 'Show less' : 'Show more'}
+                    </Button>
+                </div>
+            }
         </StyledForm>
     )
 }

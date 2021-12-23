@@ -6,4 +6,5 @@ export interface ITask {
   task_id?: string;
   finished_date?: string;
   expiration_date?: string;
+  important?: boolean;
 }
