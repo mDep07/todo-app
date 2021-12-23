@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 
-import type { ITask } from '../App';
+import type { ITask } from '../interfaces/task';
+
 import TaskForm from './TaskForm';
 import Task from './Task';
 import Button from './Button';
@@ -72,7 +73,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
   return (
     <div>
-      <TaskForm addTask={createTask} disabled={taskActive !== ''} />
+      <TaskForm addTask={createTask} disabled={taskActive !== ''} showMoreConfig />
       {
         Object.keys(groupedTasks).map((g, index) => {
 
@@ -80,7 +81,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
           return (
             <div key={index}>
-              <Button small onClick={() => toggleShowGroupedTasks(g)}>
+              <Button color="main" small onClick={() => toggleShowGroupedTasks(g)}>
                 {g} { showGroupedTasks.includes(g) ? <IoChevronUp /> : <IoChevronDown /> }
               </Button>
               {

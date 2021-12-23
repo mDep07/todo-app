@@ -1,14 +1,16 @@
-import React, { useRef, FormEvent } from 'react';
+import React, { useRef, FormEvent, useState } from 'react';
 import styled from 'styled-components';
-import { IoCheckmark } from "react-icons/io5";
+import { IoCheckmark, IoAlert } from "react-icons/io5";
 
 import Button from './Button';
-import { Theme } from './Themes';
 
 const StyledForm = styled.form`
     margin-bottom: 7px;
     border-radius: 10px;
     padding: 5px;
+`;
+
+const StyledSection = styled.section`
     display: flex;
 `;
 
@@ -18,8 +20,8 @@ const StyledInput = styled.input`
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    background-color: ${({ theme }: { theme: Theme }) => theme.backgrounColorSecondary};
-    color: ${({ theme }: { theme: Theme }) => theme.text};
+    background-color: ${({ theme }) => theme.backgroundColors.main};
+    color: ${({ theme }) => theme.text.main};
     transition: all .5s linear;
 
     &:focus {
@@ -32,28 +34,70 @@ const StyledInput = styled.input`
     }
 `;
 
-type Params = { addTask: (task: string) => void, disabled?: boolean }
-export default function TaskForm({ addTask, disabled }: Params) {
+type Params = { addTask: (task: string) => void, disabled?: boolean, showMoreConfig?: boolean }
+export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) {
+    const [showConfig, setShowConfig] = useState(false);
+    const [important, setImportant] = useState(false);
+
+
     const inputRef = useRef<HTMLInputElement>(null)
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        if(!inputRef.current) return;
+        if(!inputRef.current?.value) return;
 
         addTask(inputRef.current.value);
         inputRef.current.value = '';        
     }
 
+    const MakeImportantButton = ({label}: {label?: boolean}) => {
+        return ( 
+            <Button 
+                check 
+                color="info" 
+                disabled={disabled} 
+                type="button" 
+                title={important ? 'Make not important' : 'Make important' }
+                className={`${important ? 'active' : ''} ${label && 'small'}`}
+                icon={!label}
+                onClick={() => setImportant(!important)}            
+            >
+                <IoAlert />
+                {label ? (important ? 'Make not important' : 'Make important') : null }
+            </Button>
+        )
+    }
+
+
     return (
         <StyledForm onSubmit={handleSubmit}>
-            <StyledInput 
-                type="text" 
-                ref={inputRef} 
-                maxLength={60} 
-                disabled={disabled} 
-                placeholder="Add new Task..." 
-                required 
-            />
-            <Button disabled={disabled} type="submit"><IoCheckmark /></Button>
+            <StyledSection>
+                <StyledInput 
+                    type="text" 
+                    ref={inputRef} 
+                    maxLength={60} 
+                    disabled={disabled} 
+                    placeholder="Add new Task..." 
+                    required 
+                />
+                { !showConfig ? <MakeImportantButton  /> : null }
+                <Button icon color="main" disabled={disabled} type="submit" title="Create task">
+                    <IoCheckmark />
+                </Button>
+            </StyledSection>
+            {
+                showConfig && 
+                <StyledSection>
+                    <MakeImportantButton label />
+                </StyledSection>
+            }
+            {
+                showMoreConfig && 
+                <div>
+                    <Button link type="button" onClick={() => setShowConfig(!showConfig)}>
+                        {showConfig ? 'Show less' : 'Show more'}
+                    </Button>
+                </div>
+            }
         </StyledForm>
     )
 }
