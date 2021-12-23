@@ -3,16 +3,16 @@ import { DefaultTheme } from "styled-components";
 const colors = {
   colors: {
     main: '#F27013',
-    secondary: '#DBDBDB',
+    secondary: '#BABABA',
     danger: '#D91136',
     info: '#117FD9',
     warning: '#eBB905'
   },
   alphaColors: {
     main: 'rgba(242, 112, 19, .25)',
-    secondary: 'rgba(219, 219, 219, .25)',
+    secondary: 'rgba(186, 186, 186, .25)',
     danger: 'rgba(217, 17, 54, .25)',
-    info: '#117FD9',
+    info: 'rgba(17, 127, 217, .25)',
     warning: 'rgba(235, 185, 5, 25)'
   }
 }

@@ -49,6 +49,24 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
         inputRef.current.value = '';        
     }
 
+    const MakeImportantButton = ({label}: {label?: boolean}) => {
+        return ( 
+            <Button 
+                check 
+                color="info" 
+                disabled={disabled} 
+                type="button" 
+                title={important ? 'Make not important' : 'Make important' }
+                className={`${important ? 'active' : ''} ${label && 'small'}`}
+                icon={!label}
+                onClick={() => setImportant(!important)}            
+            >
+                <IoAlert />
+                {label ? (important ? 'Make not important' : 'Make important') : null }
+            </Button>
+        )
+    }
+
 
     return (
         <StyledForm onSubmit={handleSubmit}>
@@ -61,25 +79,15 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
                     placeholder="Add new Task..." 
                     required 
                 />
-                <Button 
-                    check 
-                    color="main" 
-                    disabled={disabled} 
-                    type="button" 
-                    title={important ? 'Make not important' : 'Make important' }
-                    className={important ? 'active' : ''}
-                    onClick={() => setImportant(!important)}
-                >
-                    <IoAlert />
-                </Button>
-                <Button color="main" disabled={disabled} type="submit" title="Create task">
+                { !showConfig ? <MakeImportantButton  /> : null }
+                <Button icon color="main" disabled={disabled} type="submit" title="Create task">
                     <IoCheckmark />
                 </Button>
             </StyledSection>
             {
                 showConfig && 
                 <StyledSection>
-                    <p>More Configs</p>
+                    <MakeImportantButton label />
                 </StyledSection>
             }
             {

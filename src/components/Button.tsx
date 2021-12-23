@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-type Props = { color?: 'main' | 'secondary' | 'danger' | 'info' | 'warning' };
+type Props = { color?: 'main' | 'secondary' | 'danger' | 'info' | 'warning', icon?: boolean };
 const StyledButton = styled.button<Props>`
     --color: ${({ color, theme }) => color ? theme.colors[color] : theme.colors.secondary };
     --alpha-color: ${({ color, theme }) => color ? theme.alphaColors[color] : theme.alphaColors.secondary };
@@ -30,10 +30,14 @@ const StyledButton = styled.button<Props>`
         filter: brightness(.25);
         cursor: not-allowed;
     }
+
+    & > svg {
+        ${({icon}) => !icon && `margin-left:5px;background:rgba(255,255,255,.15);border-radius:10px`}
+    }
 `;
 
 const StyledSmallButton = styled(StyledButton)`
-    padding: 2px 8px;
+    padding: 2px 4px;
     font-size: .9rem;
     &:hover, &:active {
         transform: scale(1);
@@ -48,7 +52,12 @@ const StyledCheckButton = styled(StyledButton)`
     &.active {
         filter: opacity(1);
         background-color: var(--color);
-        color: ${({theme}) => theme.text.main};
+        color: white;
+    }
+    &.small {
+        padding: 2px 8px;
+        font-size: .9rem;
+        transform: none;
     }
 `;
 

@@ -114,7 +114,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
         if(!toggleActive) return null;
         
         return (
-            <Button onClick={() => toggleActive(task.id)}>
+            <Button icon onClick={() => toggleActive(task.id)}>
                 {isActive ? <IoChevronUp /> : <IoChevronDown /> }
             </Button>
         )
@@ -135,7 +135,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
                 <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
             </div>
             <div className={`section__actions ${isActive ? 'active' : ''}`}>
-              <Button disabled={disabled} color="danger" onClick={() => remove(task.id)}>
+              <Button icon disabled={disabled} color="danger" onClick={() => remove(task.id)}>
                 <IoClose />
               </Button>
               <ToggleActiveTask />
