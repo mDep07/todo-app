@@ -5,23 +5,26 @@ import styled from 'styled-components';
 
 import type { ITask } from '../interfaces/task';
 import Button from './Button';
-import type { Theme } from './Themes';
 
 const StyledContainerTask = styled.li`
   list-style-type: none;
   padding: none;
   margin-bottom: 7px;
   border-radius: 10px;
-  background-color: ${({ theme }: { theme: Theme }) => theme.backgrounColorSecondary};
+  background-color: ${({theme }) => theme.backgroundColors.secondary};
   height: auto;
-  transition: all .5s linear;
+  transition: background-color .25s linear;
 
   &:not(.active):hover {
-    box-shadow:  ${({ theme }: { theme: Theme }) => theme.principalShadow};
+    box-shadow:  ${({ theme }) => theme.shades.md};
   }
 
   &.child {
-    background-color: ${({ theme }: { theme: Theme }) => theme.body};
+    background-color: ${({ theme }) => theme.backgroundColors.main};
+    &:hover {
+      box-shadow: none;
+      transform: scale(1.01);
+    }
   }
 `;
 
@@ -80,15 +83,15 @@ const StyledInput = styled.input`
 const StyledTitle = styled.h3<{ finished: boolean }>`
   font-size: .9rem;
   margin: 0;
-  color: ${({ theme }: { theme: Theme }) => theme.text};
+  color: ${({ theme }) => theme.text.main};
   font-weight: 500;
-  ${({finished}) => finished ? 'text-decoration:line-through;color:#7c7c7c' : ''}
+  ${({ finished, theme }) => finished ? `text-decoration:line-through;color:${theme.text.secondary}` : ''}
 `;
 
 const StyledDetails = styled.div`
   padding: 0 20px;
   & p {
-    color: #7c7c7c;
+    color: ${({ theme }) => theme.text.secondary};
     font-size: small;
     margin: 0;
   }
@@ -111,7 +114,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
         if(!toggleActive) return null;
         
         return (
-            <Button color="189, 189, 189" onClick={() => toggleActive(task.id)}>
+            <Button onClick={() => toggleActive(task.id)}>
                 {isActive ? <IoChevronUp /> : <IoChevronDown /> }
             </Button>
         )
@@ -132,7 +135,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
                 <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
             </div>
             <div className={`section__actions ${isActive ? 'active' : ''}`}>
-              <Button disabled={disabled} color="245, 66, 93" onClick={() => remove(task.id)}>
+              <Button disabled={disabled} color="danger" onClick={() => remove(task.id)}>
                 <IoClose />
               </Button>
               <ToggleActiveTask />

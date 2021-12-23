@@ -1,0 +1,58 @@
+import { DefaultTheme } from "styled-components";
+
+const colors = {
+  colors: {
+    main: '#F27013',
+    secondary: '#DBDBDB',
+    danger: '#D91136',
+    info: '#117FD9',
+    warning: '#eBB905'
+  },
+  alphaColors: {
+    main: 'rgba(242, 112, 19, .25)',
+    secondary: 'rgba(219, 219, 219, .25)',
+    danger: 'rgba(217, 17, 54, .25)',
+    info: '#117FD9',
+    warning: 'rgba(235, 185, 5, 25)'
+  }
+}
+
+const light: DefaultTheme = {
+  backgroundColors: {
+    main: "#F5F5F5",
+    secondary: "#eeeeee",
+    body: '#FFF',
+  },
+  text: {
+    main: "#363537",
+    secondary: "#636363",
+  },
+  shades: {
+    sm: "0 1px 2px #d4d4d4",
+    md: "0 2px 3px #d4d4d4",
+    lg: "0 4px 8px #d4d4d4",
+  },
+  ...colors
+};
+
+const dark: DefaultTheme = {
+  backgroundColors: {
+    main: "#141414",
+    secondary: "#272727",
+    body: '#000',
+
+  },
+  text: {
+    main: "#FAFAFA",
+    secondary: "#636363",
+  },
+  shades: {
+    sm: "0 1px 2px #0f0f0f",
+    md: "0 2px 3px #0f0f0f",
+    lg: "0 4px 8px #0f0f0f",
+  },
+  ...colors
+  
+}
+
+export { light, dark }

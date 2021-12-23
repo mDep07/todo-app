@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { IoCheckmark } from "react-icons/io5";
 
 import Button from './Button';
-import { Theme } from './Themes';
 
 const StyledForm = styled.form`
     margin-bottom: 7px;
@@ -18,8 +17,8 @@ const StyledInput = styled.input`
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    background-color: ${({ theme }: { theme: Theme }) => theme.backgrounColorSecondary};
-    color: ${({ theme }: { theme: Theme }) => theme.text};
+    background-color: ${({ theme }) => theme.backgroundColors.main};
+    color: ${({ theme }) => theme.text.main};
     transition: all .5s linear;
 
     &:focus {
@@ -32,8 +31,8 @@ const StyledInput = styled.input`
     }
 `;
 
-type Params = { addTask: (task: string) => void, disabled?: boolean }
-export default function TaskForm({ addTask, disabled }: Params) {
+type Params = { addTask: (task: string) => void, disabled?: boolean, showMoreConfig?: boolean }
+export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) {
     const inputRef = useRef<HTMLInputElement>(null)
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -45,15 +44,19 @@ export default function TaskForm({ addTask, disabled }: Params) {
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            <StyledInput 
-                type="text" 
-                ref={inputRef} 
-                maxLength={60} 
-                disabled={disabled} 
-                placeholder="Add new Task..." 
-                required 
-            />
-            <Button disabled={disabled} type="submit"><IoCheckmark /></Button>
+            <div>
+                <StyledInput 
+                    type="text" 
+                    ref={inputRef} 
+                    maxLength={60} 
+                    disabled={disabled} 
+                    placeholder="Add new Task..." 
+                    required 
+                />
+                <Button color="main" disabled={disabled} type="submit">
+                    <IoCheckmark />
+                </Button>
+            </div>
         </StyledForm>
     )
 }

@@ -79,7 +79,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
           return (
             <div key={index}>
-              <Button small onClick={() => toggleShowGroupedTasks(g)}>
+              <Button color="main" small onClick={() => toggleShowGroupedTasks(g)}>
                 {g} { showGroupedTasks.includes(g) ? <IoChevronUp /> : <IoChevronDown /> }
               </Button>
               {

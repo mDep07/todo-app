@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { IoMoon, IoSunny } from 'react-icons/io5';
 
 import { GlobalStyles } from "./components/GlobalStyles";
-import { lightTheme, darkTheme, Theme } from "./components/Themes";
+import { light, dark } from "./theme";
 
 import type { ITask } from './interfaces/task';
 
@@ -97,7 +97,7 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
 }
 
 const StyledContainer = styled.main`
-  background-color: ${({ theme }: { theme: Theme }) => theme.body};
+  background-color: ${({ theme }) => theme.backgroundColors.main};
   padding: 1rem;
   max-width: 550px;
   min-height: calc(100vh - 2rem);
@@ -126,14 +126,16 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, { tasks: listTasks });
   
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem('mode') || 'light');
   const themeToggler = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
-    localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
+    localStorage.setItem('mode', theme === 'light' ? 'dark' : 'light')
   }
 
+  const getTheme = () => theme === 'light' ? light : dark;
+
   return (
-    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+    <ThemeProvider theme={getTheme()}>
       <GlobalStyles/>
       <StyledContainer>
         <StyledSwitchTheme title="Change theme mode" onClick={themeToggler}>
