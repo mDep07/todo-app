@@ -1,4 +1,4 @@
-import React, { useReducer, Reducer, useState } from 'react';
+import React, { useReducer, Reducer, useState, useEffect } from 'react';
 //import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 import styled, { ThemeProvider } from 'styled-components';
@@ -27,13 +27,22 @@ type TAction = { type: 'add', payload: ITask } | { type: 'remove', payload: stri
 const reducer: Reducer<TState, TAction> = (state, action): TState => {
   const { type, payload } = action;
 
+  const orderTasks = (tasks: ITask[]) => {
+    const orderedByDate = tasks.sort((a, b) => {
+        if(moment(a.create_date).isBefore(b.create_date)) return 1
+        if(moment(a.create_date).isAfter(b.create_date)) return -1
+        return 0
+      });
+    
+    const orderedByImportance = orderedByDate.sort((a, b) => Number(b.important) - Number(a.important));
+    return orderedByImportance;
+  }
+
   switch(type) {
     case 'add': {
       const { tasks } = state;
       const task = payload;
       if(typeof task === 'string') return state;
-
-      console.log({task})
       
       const newTask: ITask = { 
         id: uuidv4(), 
@@ -43,9 +52,13 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
         task_id: task.task_id, 
         important: task.important
       };
+
+      const orderedTasks = orderTasks([...tasks, {...newTask}]);
+      console.log({orderedTasks})
+
       return {
         ...state,
-        tasks: [...tasks, {...newTask}]
+        tasks: orderedTasks
       }
     }
     case 'remove': {
@@ -126,8 +139,12 @@ const StyledSwitchTheme = styled.button`
 function App() {
 
   const [state, dispatch] = useReducer(reducer, { tasks: listTasks });
-  
   const [theme, setTheme] = useState(localStorage.getItem('mode') || 'light');
+  
+  useEffect(() => {
+    console.log('App')
+  }, [])
+
   const themeToggler = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
     localStorage.setItem('mode', theme === 'light' ? 'dark' : 'light')
