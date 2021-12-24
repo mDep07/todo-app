@@ -34,7 +34,7 @@ const StyledInput = styled.input`
     }
 `;
 
-type Params = { addTask: (task: string) => void, disabled?: boolean, showMoreConfig?: boolean }
+type Params = { addTask: (task: string, important?: boolean) => void, disabled?: boolean, showMoreConfig?: boolean }
 export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) {
     const [showConfig, setShowConfig] = useState(false);
     const [important, setImportant] = useState(false);
@@ -45,8 +45,9 @@ export default function TaskForm({ addTask, disabled, showMoreConfig }: Params) 
         event.preventDefault();
         if(!inputRef.current?.value) return;
 
-        addTask(inputRef.current.value);
-        inputRef.current.value = '';        
+        addTask(inputRef.current.value, important);
+        inputRef.current.value = '';
+        setImportant(false);
     }
 
     const MakeImportantButton = ({label}: {label?: boolean}) => {

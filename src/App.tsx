@@ -40,7 +40,8 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
         title: task.title, 
         create_date: task.create_date, 
         finished: false, 
-        task_id: task.task_id 
+        task_id: task.task_id, 
+        important: task.important
       };
       return {
         ...state,

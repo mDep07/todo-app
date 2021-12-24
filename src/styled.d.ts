@@ -21,14 +21,16 @@ declare module 'styled-components' {
       secondary: string,
       danger: string,
       info: string,
-      warning: string
+      warning: string,
+      success: string,
     },
     alphaColors: {
       main: string,
       secondary: string,
       danger: string,
       info: string,
-      warning: string
+      warning: string,
+      success: string,
     },
   }
 }

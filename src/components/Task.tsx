@@ -97,6 +97,16 @@ const StyledDetails = styled.div`
   }
 `;
 
+const StyledBadge = styled.span<{ color?: string }>`
+  display: inline-block;
+  background-color: ${({color, theme}) => !color ? theme.colors.info : color};
+  border-radius: 1000px;
+  color: white;
+  padding: 0 6px;
+  font-size: .7rem;
+  font-weight: 700;
+`;
+
 type Params = { 
     task: ITask, 
     isActive?: boolean,
@@ -114,7 +124,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
         if(!toggleActive) return null;
         
         return (
-            <Button icon onClick={() => toggleActive(task.id)}>
+            <Button onClick={() => toggleActive(task.id)}>
                 {isActive ? <IoChevronUp /> : <IoChevronDown /> }
             </Button>
         )
@@ -133,9 +143,10 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
             </div>
             <div className="section__body">
                 <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
+                { task.important && <StyledBadge>Important</StyledBadge> }
             </div>
             <div className={`section__actions ${isActive ? 'active' : ''}`}>
-              <Button icon disabled={disabled} color="danger" onClick={() => remove(task.id)}>
+              <Button disabled={disabled} color="danger" onClick={() => remove(task.id)}>
                 <IoClose />
               </Button>
               <ToggleActiveTask />
