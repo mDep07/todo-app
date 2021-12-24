@@ -11,7 +11,7 @@ import Button from './Button';
 type Params = { 
   tasks: ITask[], 
   create: (task: ITask) => void, 
-  finish: (taskId: string) => void, 
+  finish: (taskId: string, finished: boolean) => void, 
   remove: (taskId: string) => void 
 };
 
@@ -65,7 +65,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
 
   const handleDeleteTask = (taskId: string) => remove(taskId);
 
-  const handleFinishTask = (taskId: string) => finish(taskId);
+  const handleFinishTask = (taskId: string, finished: boolean) => finish(taskId, finished);
 
   const getSubTasks = (taskId: string) => {
     return tasks.filter(t => t.task_id === taskId);

@@ -111,7 +111,7 @@ type Params = {
     task: ITask, 
     isActive?: boolean,
     toggleActive?: (taskId: string) => void,
-    finish: (taskId: string) => void,
+    finish: (taskId: string, finished: boolean) => void,
     remove: (taskId: string) => void,
     isChild?: boolean,
     disabled?: boolean,
@@ -137,7 +137,7 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
               <StyledInput 
                 disabled={disabled} 
                 type="checkbox" 
-                onChange={() => finish(task.id)} 
+                onChange={(e) => finish(task.id, e.target.checked)} 
                 checked={task.finished} 
               />
             </div>
