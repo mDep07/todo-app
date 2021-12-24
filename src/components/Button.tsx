@@ -48,9 +48,12 @@ const StyledButton = styled.button<Props>`
         transform: scale(0.95);
     }
 
-    &:disabled {
+    &:disabled,
+    &:hover:disabled,
+    &:active:disabled {
         filter: brightness(.25);
         cursor: not-allowed;
+        transform: scale(1);
     }
 
     ${({icon}) => icon ? buttonWithIcon : ''}

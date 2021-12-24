@@ -108,17 +108,20 @@ const StyledBadge = styled.span<{ color?: string }>`
 `;
 
 type Params = { 
-    task: ITask, 
-    isActive?: boolean,
-    toggleActive?: (taskId: string) => void,
+    task: ITask,
     finish: (taskId: string, finished: boolean) => void,
     remove: (taskId: string) => void,
+    subtasks?: ITask[],
+    isActive?: boolean,
+    toggleActive?: (taskId: string) => void,
     isChild?: boolean,
     disabled?: boolean,
     children?: JSX.Element[] | JSX.Element | null
     
 };
-export default function Task({ task, isActive, toggleActive, finish, remove, isChild, disabled, children }: Params) {
+export default function Task({ 
+  task, finish, remove, subtasks, isActive, toggleActive, isChild, disabled, children 
+}: Params) {
 
     const ToggleActiveTask = () => {
         if(!toggleActive) return null;
@@ -128,6 +131,44 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
                 {isActive ? <IoChevronUp /> : <IoChevronDown /> }
             </Button>
         )
+    }
+
+    const CountSubTasks = () => {
+      if(!subtasks) return null;
+
+      const finished = subtasks.filter(t => t.finished).length;
+      const total = subtasks.length;
+
+      const StyledCount = styled.small<{ completed?: boolean, almost?: boolean  }>`
+        display: inline-block;
+        margin: 5px;
+        font-weight: 500;
+        color: ${({completed, almost, theme}) => 
+          completed ? theme.colors.success : almost ? theme.colors.warning : theme.text.secondary
+        }
+      `;
+
+      if(finished === total) {
+        return (
+          <StyledCount completed>
+            {finished}/{total} ✅ Good work!
+          </StyledCount>
+        )
+      }
+
+      if(finished >= total / 2) {
+        return (
+          <StyledCount almost>
+            {finished}/{total} 🎉 Keep going!
+          </StyledCount>
+        )
+      }
+
+      return (
+        <StyledCount>
+          {finished}/{total}
+        </StyledCount>
+      )
     }
 
     return (
@@ -162,7 +203,20 @@ export default function Task({ task, isActive, toggleActive, finish, remove, isC
                   {task.finished_date && <p>{moment(task.finished_date).fromNow()}</p>}
                 </StyledDetails>
               }
-              {children}
+              <div style={{padding: 10}}>
+                {children}
+                <CountSubTasks />
+                {subtasks?.map(t => (
+                  <Task
+                    key={t.id}
+                    task={t}
+                    finish={finish}
+                    remove={remove}
+                    isChild
+                    disabled={task.finished}
+                  />
+                ))}
+              </div>
             </React.Fragment>
           }
       </StyledContainerTask>

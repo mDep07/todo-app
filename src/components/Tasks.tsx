@@ -91,14 +91,18 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
                     {groupedTasks[g].filter(t => !t.task_id).map(task => (
                       <Task 
                         key={task.id}
-                        task={task} 
+                        task={task}
+                        subtasks={getSubTasks(task.id)}
                         isActive={taskActive === task.id} 
                         toggleActive={toggleTaskActive} 
                         finish={handleFinishTask}
                         remove={handleDeleteTask}
                       >
-                        <div style={{padding: 10}}>
-                          <TaskForm addTask={createTask} disabled={task.finished} />
+                        <TaskForm addTask={createTask} disabled={task.finished} />
+                        {/* <div style={{padding: 10}}>
+                          <small>
+                            {getSubTasks(task.id).length}/{getSubTasks(task.id).filter(t => t.finished).length}
+                          </small>
                           {getSubTasks(task.id).map(t => (
                             <Task
                               key={t.id}
@@ -109,7 +113,7 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
                               disabled={task.finished}
                             />
                           ))}
-                        </div>
+                        </div> */}
                       </Task>
                     ))}
                   </ul>
