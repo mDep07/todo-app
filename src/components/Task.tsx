@@ -148,7 +148,7 @@ export default function Task({
         }
       `;
 
-      if(finished === total) {
+      if(finished === total && total > 0) {
         return (
           <StyledCount completed>
             {finished}/{total} ✅ Good work!
@@ -156,7 +156,7 @@ export default function Task({
         )
       }
 
-      if(finished >= total / 2) {
+      if(finished >= total / 2 && total > 0) {
         return (
           <StyledCount almost>
             {finished}/{total} 🎉 Keep going!
