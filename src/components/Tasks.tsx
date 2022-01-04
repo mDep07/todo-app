@@ -1,104 +1,134 @@
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import React, { useState, useEffect } from "react";
+import moment from "moment";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 
-import type { ITask } from '../interfaces/task';
+import type { ITask } from "../interfaces/task";
 
-import TaskForm from './TaskForm';
-import Task from './Task';
-import Button from './Button';
+import TaskForm from "./TaskForm";
+import Task from "./Task";
+import Button from "./Button";
 
-type Params = { 
-  tasks: ITask[], 
-  create: (task: ITask) => void, 
-  finish: (taskId: string, finished: boolean) => void, 
-  remove: (taskId: string) => void 
+type Params = {
+  tasks: ITask[];
+  create: (task: ITask) => void;
+  finish: (taskId: string, finished: boolean) => void;
+  remove: (taskId: string) => void;
 };
 
 export default function Tasks({ tasks, create, finish, remove }: Params) {
-
-  type TGroupedTasks = { today: ITask[], pending: ITask[], overdue: ITask[] };
-  const initialState: TGroupedTasks = { today: [], pending: [], overdue: [] };
+  type TGroupedTasks = { today: ITask[]; pending: ITask[] };
+  const initialState: TGroupedTasks = { today: [], pending: [] };
   const [groupedTasks, setGroupedTasks] = useState(initialState);
 
   useEffect(() => {
-    
-    const todaysTasks = tasks.filter(t => moment().startOf('day').isSame(moment(t.create_date).startOf('day')));
-    const pendingTasks = tasks.filter(t => moment(t.create_date).isBefore(moment().startOf('day')));
-    const overdueTasks = tasks.filter(t => moment(t.create_date).isBefore(moment().startOf('day')) && t.expiration_date);
-    
+    const todaysTasks = tasks.filter((t) =>
+      moment().startOf("day").isSame(moment(t.create_date).startOf("day"))
+    );
+    const pendingTasks = tasks.filter((t) =>
+      moment(t.create_date).isBefore(moment().startOf("day"))
+    );
+
     setGroupedTasks({
       today: todaysTasks,
       pending: pendingTasks,
-      overdue: overdueTasks
     });
-
   }, [tasks]);
 
   // useEffect(() => console.log({groupedTasks}), [groupedTasks])
-  
-  const [taskActive, setTaskActive] = useState('');
-  const toggleTaskActive = (taskId: string) => {
-    if(taskId === taskActive) setTaskActive('');
-    else setTaskActive(taskId);
-  }
 
-  const [showGroupedTasks, setShowGroupedTasks] = useState(['today', 'pending', 'overdue']);
-  const toggleShowGroupedTasks = (groupedTask: 'today' | 'pending' | 'overdue') => {
-    if(!showGroupedTasks.includes(groupedTask)) {
-      setShowGroupedTasks([...showGroupedTasks, groupedTask])
+  const [taskActive, setTaskActive] = useState("");
+  const toggleTaskActive = (taskId: string) => {
+    if (taskId === taskActive) setTaskActive("");
+    else setTaskActive(taskId);
+  };
+
+  const [showGroupedTasks, setShowGroupedTasks] = useState([
+    "today",
+    "pending",
+  ]);
+  const toggleShowGroupedTasks = (groupedTask: "today" | "pending") => {
+    if (!showGroupedTasks.includes(groupedTask)) {
+      setShowGroupedTasks([...showGroupedTasks, groupedTask]);
     } else {
       const groupedTasksIndex = showGroupedTasks.indexOf(groupedTask);
       setShowGroupedTasks([
-        ...showGroupedTasks.slice(0, groupedTasksIndex), 
-        ...showGroupedTasks.slice(groupedTasksIndex + 1)
+        ...showGroupedTasks.slice(0, groupedTasksIndex),
+        ...showGroupedTasks.slice(groupedTasksIndex + 1),
       ]);
 
-      if(groupedTasks[groupedTask].findIndex(t => t.id === taskActive) !== -1) toggleTaskActive('');
+      if (
+        groupedTasks[groupedTask].findIndex((t) => t.id === taskActive) !== -1
+      )
+        toggleTaskActive("");
     }
-  }
+  };
 
   const createTask = (task: string, important?: boolean) => {
-    const taskFather = taskActive !== '' ? taskActive : undefined;
-    create({ id: '', title: task, create_date: moment().format(), finished: false, task_id: taskFather, important });
-  }
+    const taskFather = taskActive !== "" ? taskActive : undefined;
+    create({
+      id: "",
+      title: task,
+      create_date: moment().format(),
+      finished: false,
+      task_id: taskFather,
+      important,
+    });
+  };
 
   const handleDeleteTask = (taskId: string) => remove(taskId);
 
-  const handleFinishTask = (taskId: string, finished: boolean) => finish(taskId, finished);
+  const handleFinishTask = (taskId: string, finished: boolean) =>
+    finish(taskId, finished);
 
   const getSubTasks = (taskId: string) => {
-    return tasks.filter(t => t.task_id === taskId);
-  }
+    return tasks.filter((t) => t.task_id === taskId);
+  };
 
   return (
     <div>
-      <TaskForm addTask={createTask} disabled={taskActive !== ''} showMoreConfig />
-      {
-        Object.keys(groupedTasks).map((g, index) => {
+      <TaskForm
+        addTask={createTask}
+        disabled={taskActive !== ""}
+        showMoreConfig
+      />
+      {Object.keys(groupedTasks).map((g, index) => {
+        if (g !== "today" && g !== "pending") return null;
 
-          if(g !== 'today' && g !== 'pending' && g !== 'overdue') return null
-
-          return (
-            <div key={index}>
-              <Button icon color="main" small onClick={() => toggleShowGroupedTasks(g)}>
-                {g} { showGroupedTasks.includes(g) ? <IoChevronUp /> : <IoChevronDown /> }
-              </Button>
-              {
-                showGroupedTasks.includes(g) &&
-                <div>
-                  <ul style={{ padding: '0', margin: '0' }}>
-                    {groupedTasks[g].filter(t => !t.task_id).map(task => (
-                      <Task 
+        return (
+          <div key={index}>
+            <Button
+              icon
+              color="main"
+              small
+              onClick={() => toggleShowGroupedTasks(g)}
+            >
+              {g}{" "}
+              {showGroupedTasks.includes(g) ? (
+                <IoChevronUp />
+              ) : (
+                <IoChevronDown />
+              )}
+            </Button>
+            {showGroupedTasks.includes(g) && (
+              <div>
+                <ul style={{ padding: "0", margin: "0" }}>
+                  {groupedTasks[g]
+                    .filter((t) => !t.task_id)
+                    .map((task) => (
+                      <Task
                         key={task.id}
                         task={task}
                         subtasks={getSubTasks(task.id)}
-                        isActive={taskActive === task.id} 
-                        toggleActive={toggleTaskActive} 
+                        isActive={taskActive === task.id}
+                        toggleActive={toggleTaskActive}
                         finish={handleFinishTask}
                         remove={handleDeleteTask}
+                        state={g}
                       >
-                        <TaskForm addTask={createTask} disabled={task.finished} />
+                        <TaskForm
+                          addTask={createTask}
+                          disabled={task.finished}
+                        />
                         {/* <div style={{padding: 10}}>
                           <small>
                             {getSubTasks(task.id).length}/{getSubTasks(task.id).filter(t => t.finished).length}
@@ -116,13 +146,12 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
                         </div> */}
                       </Task>
                     ))}
-                  </ul>
-                </div>
-              }
-            </div>
-          )
-        })
-      }
+                </ul>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
-  ) 
+  );
 }
