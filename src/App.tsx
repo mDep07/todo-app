@@ -67,6 +67,7 @@ const StyledContainer = styled.main`
   min-height: calc(100vh - 2rem);
   margin: 0 auto;
   overflow-y: auto;
+  position: relative;
 `;
 
 const StyledSwitchTheme = styled.button`

@@ -7,6 +7,7 @@ import type { ITask } from '../interfaces/task';
 import TaskForm from './TaskForm';
 import Task from './Task';
 import Button from './Button';
+import Alert, { Params as AlertParams } from './Alert';
 
 type Params = { 
   tasks: ITask[], 
@@ -20,6 +21,9 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
   type TGroupedTasks = { today: ITask[], pending: ITask[], overdue: ITask[] };
   const initialState: TGroupedTasks = { today: [], pending: [], overdue: [] };
   const [groupedTasks, setGroupedTasks] = useState(initialState);
+  const [taskActive, setTaskActive] = useState('');
+  const initialStateAlert: AlertParams = { show: false, type: 'danger', title: '', content: '' };
+  const [alert, setAlert] = useState(initialStateAlert);
 
   useEffect(() => {
     
@@ -36,8 +40,6 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
   }, [tasks]);
 
   // useEffect(() => console.log({groupedTasks}), [groupedTasks])
-  
-  const [taskActive, setTaskActive] = useState('');
   const toggleTaskActive = (taskId: string) => {
     if(taskId === taskActive) setTaskActive('');
     else setTaskActive(taskId);
@@ -61,9 +63,34 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
   const createTask = (task: string, important?: boolean) => {
     const taskFather = taskActive !== '' ? taskActive : undefined;
     create({ id: '', title: task, create_date: moment().format(), finished: false, task_id: taskFather, important });
+    setAlert({ 
+      show: true,
+      type: 'main',
+      title: 'Create Task', 
+      content: `The task was created <strong>successfully</strong>!`,
+      autoClose: true
+    })
   }
 
-  const handleDeleteTask = (taskId: string) => remove(taskId);
+  const handleDeleteTask = (taskId: string) => {
+    const task = tasks.find(t => t.id === taskId);
+    setAlert({ 
+      show: true,
+      type: 'danger',
+      title: 'Delete Task', 
+      content: `Are you sure you want to delete the task <strong>"${task?.title}"</strong>?`, 
+      confirmAction: () => {
+        remove(taskId)
+        setAlert({ 
+          show: true,
+          type: 'success',
+          title: 'Deleted Task', 
+          content: `The task was deleted <strong>successfully</strong>!`,
+          autoClose: true
+        })
+      } 
+    })
+  }
 
   const handleFinishTask = (taskId: string, finished: boolean) => finish(taskId, finished);
 
@@ -123,6 +150,8 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
           )
         })
       }
+
+      <Alert {...alert} />
     </div>
   ) 
 }
