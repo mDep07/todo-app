@@ -23,7 +23,7 @@ const buttonWithIcon = css`
     }
 `;
 
-type Props = { color?: 'main' | 'secondary' | 'danger' | 'info' | 'warning', icon?: boolean };
+type Props = { color?: 'main' | 'secondary' | 'danger' | 'info' | 'warning' | 'success', icon?: boolean };
 const StyledButton = styled.button<Props>`
     --color: ${({ color, theme }) => color ? theme.colors[color] : theme.colors.secondary };
     --alpha-color: ${({ color, theme }) => color ? theme.alphaColors[color] : theme.alphaColors.secondary };

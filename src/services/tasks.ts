@@ -8,7 +8,10 @@ export default function TasksService() {
   const KEY_ITEM = 'tasks';
   const getTasks = () => {
     const tasks: ITask[] = JSON.parse(localStorage.getItem(KEY_ITEM) || '[]');
-    return tasks;
+    const tasksFiltered = tasks.filter(t => 
+      moment().startOf("day").isSame(moment(t.create_date).startOf("day")) || !t.finished
+    )
+    return tasksFiltered;
   }
 
   const addTask = (task: ITask) => {
