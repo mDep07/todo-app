@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import type { ITask } from "../interfaces/task";
 
@@ -65,9 +67,13 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
   const createTask = (task: string, important?: boolean) => {
     const taskFather = taskActive !== '' ? taskActive : undefined;
     create({ id: '', title: task, create_date: moment().format(), finished: false, task_id: taskFather, important });
+    toast.success('Created task successfully!');
   }
 
-  const handleDeleteTask = (taskId: string) => remove(taskId)
+  const handleDeleteTask = (taskId: string) => {
+    remove(taskId)
+    toast.success('Deleted task successfully!');
+  }
 
   const handleFinishTask = (taskId: string, finished: boolean) =>
     finish(taskId, finished);
@@ -146,6 +152,19 @@ export default function Tasks({ tasks, create, finish, remove }: Params) {
           )
         })
       }
+
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }
