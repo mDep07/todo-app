@@ -19,6 +19,16 @@ const colors = {
   }
 }
 
+const borderRadius = {
+  radius: {
+    xs: '.25rem',
+    sm: '.5rem',
+    md: '.75rem',
+    lg: '1rem',
+    full: '999px'
+  }
+}
+
 const light: DefaultTheme = {
   backgroundColors: {
     main: "#F5F5F5",
@@ -34,7 +44,8 @@ const light: DefaultTheme = {
     md: "0 2px 3px #d4d4d4",
     lg: "0 4px 8px #d4d4d4",
   },
-  ...colors
+  ...colors,
+  ...borderRadius
 };
 
 const dark: DefaultTheme = {
@@ -53,7 +64,8 @@ const dark: DefaultTheme = {
     md: "0 2px 3px #0f0f0f",
     lg: "0 4px 8px #0f0f0f",
   },
-  ...colors
+  ...colors,
+  ...borderRadius
   
 }
 

@@ -7,7 +7,7 @@ import { light, dark } from "./theme";
 
 import type { ITask } from './interfaces/task';
 
-import Tasks from './components/Tasks';
+import Tasks from './components/Tasks/Tasks';
 import { orderTasks } from './utils/orderTasks';
 import TasksService from './services/tasks';
 const { getTasks, addTask, removeTask, updateTask } = TasksService();
@@ -62,20 +62,28 @@ const reducer: Reducer<TState, TAction> = (state, action): TState => {
 
 const StyledContainer = styled.main`
   background-color: ${({ theme }) => theme.backgroundColors.main};
-  padding: 1rem;
+  border-radius: ${({ theme }) => theme.radius.lg};
+  /* padding: 1rem; */
   max-width: 550px;
-  min-height: calc(100vh - 2rem);
   margin: 0 auto;
+  margin-top: 1rem;
+  min-height: calc(100vh - 2rem);
   overflow-y: auto;
   position: relative;
 `;
 
+const StyledTitle = styled.h1`
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.5rem;
+`;
+
 const StyledSwitchTheme = styled.button`
     border: none;
-    padding: 4px;
+    padding: 2px;
     background-color: transparent;
     color: darkgray;
-    font-size: 2rem;
+    font-size: 1.8rem;
     display: flex;
     border-radius: 10px;
     cursor: pointer;
@@ -90,10 +98,18 @@ const StyledSwitchTheme = styled.button`
 function App() {
 
   const [state, dispatch] = useReducer(reducer, { tasks: getTasks() });
-  const [theme, setTheme] = useState(localStorage.getItem('mode') || 'light');
+  const [theme, setTheme] = useState('light');
   
   useEffect(() => {
-    console.log('App')
+    const savedTheme = localStorage.getItem('mode');
+    if(savedTheme) {
+      setTheme(savedTheme)
+    } else {
+      const matchedDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if(matchedDarkTheme) {
+        setTheme('dark')
+      }
+    }
   }, [])
 
   const themeToggler = () => {
@@ -107,16 +123,18 @@ function App() {
     <ThemeProvider theme={getTheme()}>
       <GlobalStyles/>
       <StyledContainer>
-        <StyledSwitchTheme title="Change theme mode" onClick={themeToggler}>
-          { theme === 'light' ? <IoMoon /> : <IoSunny /> }
-        </StyledSwitchTheme>
-        <h1>Todo App</h1>
-        <Tasks 
-          tasks={state.tasks} 
-          create={(task: ITask) => dispatch({ type: 'add', payload: task })}
-          finish={(taskId: string, finished: boolean) => dispatch({ type: 'finish', payload: { taskId, finished } })}
-          remove={(taskId: string) => dispatch({ type: 'remove', payload: taskId })}
-        />
+        <div style={{ padding: 16 }}>
+          <StyledSwitchTheme title="Change theme mode" onClick={themeToggler}>
+            { theme === 'light' ? <IoMoon /> : <IoSunny /> }
+          </StyledSwitchTheme>
+          <StyledTitle>Todo App 🗒️</StyledTitle>
+          <Tasks 
+            tasks={state.tasks} 
+            create={(task: ITask) => dispatch({ type: 'add', payload: task })}
+            finish={(taskId: string, finished: boolean) => dispatch({ type: 'finish', payload: { taskId, finished } })}
+            remove={(taskId: string) => dispatch({ type: 'remove', payload: taskId })}
+          />
+        </div>
       </StyledContainer>
     </ThemeProvider>
   );

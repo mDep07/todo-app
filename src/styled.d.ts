@@ -32,5 +32,12 @@ declare module 'styled-components' {
       warning: string,
       success: string,
     },
+    radius: {
+      xs: string;
+      sm: string;
+      md: string;
+      lg: string;
+      full: string;
+    }
   }
 }

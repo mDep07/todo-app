@@ -8,14 +8,14 @@ import {
 } from "react-icons/io5";
 import styled from "styled-components";
 
-import type { ITask } from "../interfaces/task";
-import Button from "./Button";
+import type { ITask } from "../../interfaces/task";
+import Button from "../utils/Button";
 
 const StyledContainerTask = styled.li`
   list-style-type: none;
   padding: none;
   margin-bottom: 7px;
-  border-radius: 10px;
+  border-radius: ${({ theme }) => theme.radius.lg};
   background-color: ${({ theme }) => theme.backgroundColors.secondary};
   height: auto;
   transition: background-color 0.25s linear;
@@ -35,7 +35,7 @@ const StyledContainerTask = styled.li`
 
 const StyledTask = styled.div`
   display: flex;
-  padding: 4px;
+  /* padding: 4px; */
   & .section__check {
     flex: 1;
     display: flex;
@@ -125,9 +125,9 @@ type Params = {
   toggleActive?: (taskId: string) => void;
   isChild?: boolean;
   disabled?: boolean;
-  state?: 'pending' | 'today';
   children?: JSX.Element[] | JSX.Element | null;
 };
+
 export default function Task({
   task,
   finish,
@@ -137,8 +137,7 @@ export default function Task({
   toggleActive,
   isChild,
   disabled,
-  children,
-  state
+  children
 }: Params) {
 
   const [showConfirmRemove, setShowConfirmRemove] = useState(false)
@@ -147,7 +146,7 @@ export default function Task({
     if (!toggleActive) return null;
 
     return (
-      <Button onClick={() => toggleActive(task.id)}>
+      <Button size="lg" onClick={() => toggleActive(task.id)}>
         {isActive ? <IoChevronUp /> : <IoChevronDown />}
       </Button>
     );
@@ -214,8 +213,7 @@ export default function Task({
         </div>
         <div className="section__body">
           <StyledTitle finished={task.finished}>{task.title}</StyledTitle>
-          {task.important && <StyledBadge>Important</StyledBadge>}
-          {state === 'pending' && <StyledBadge color="main">{moment(task.create_date).format('LLL')}</StyledBadge>}
+          
         </div>
         <div className={`section__actions ${isActive ? "active" : ""}`}>
           {
