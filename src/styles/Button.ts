@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
-  --color: ${({theme}) => theme.colors.main};
-  --bg-color: ${({theme}) => theme.alphaColors.main};
+type colors = 'danger' | 'info' | 'secondary';
+
+const StyledButton = styled.button<{ color?: colors, checked?: boolean }>`
+  --color: ${({theme, color}) => !color ? theme.colors.main : theme.colors[color]};
+  --bg-color: ${({theme, color}) => !color ? theme.alphaColors.main : theme.alphaColors[color]};
 
   border: none;
   font-size: 12px;
@@ -39,6 +41,11 @@ export const StyledIconButton = styled(StyledButton)`
   font-size: 1rem;
   display: flex;
   align-items: center;
+
+  &:focus {
+    outline-width: 1px;
+  }
+
   & svg {
     /* background-color: white; */
   }

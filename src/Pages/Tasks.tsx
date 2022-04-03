@@ -1,8 +1,12 @@
 import { Reducer, useReducer } from "react";
-import TaskForm from "../components/Task/TaskForm"
+
+
 import { ITask } from "../interfaces/task";
 import TasksService from "../services/tasks";
 import { orderTasks } from "../utils/orderTasks";
+
+import TaskForm from "../components/Task/TaskForm"
+import TasksList from "../components/Task/TasksList";
 
 const { getTasks, addTask, removeTask, updateTask } = TasksService();
 
@@ -61,21 +65,11 @@ export default function Tasks() {
     <section style={{ padding: '0 1rem' }}>
       <h3>Tasks</h3>
       <TaskForm createTask={(task: ITask) => dispatch({ type: 'add', payload: task })} />
-      <div>
-        <ul>
-          {
-            state.tasks.map(task => (
-              <li key={task.id}>
-                <input type="checkbox" />
-                {task.title}
-                <span>
-                  <button onClick={() => dispatch({ type: 'remove', payload: task.id })}>Eliminar</button>
-                </span>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <TasksList 
+        tasks={state.tasks} 
+        remove={(taskId) => dispatch({ type: 'remove', payload: taskId })}
+        finish={(taskId, finished) => dispatch({ type: 'finish', payload: { taskId, finished } })}
+      />
     </section>
   )
 }
