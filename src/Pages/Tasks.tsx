@@ -65,7 +65,13 @@ export default function Tasks() {
         <ul>
           {
             state.tasks.map(task => (
-              <li>{task.title}</li>
+              <li key={task.id}>
+                <input type="checkbox" />
+                {task.title}
+                <span>
+                  <button onClick={() => dispatch({ type: 'remove', payload: task.id })}>Eliminar</button>
+                </span>
+              </li>
             ))
           }
         </ul>

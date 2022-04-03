@@ -1,5 +1,9 @@
 import { useFormik } from 'formik';
+
 import { ITask } from '../../interfaces/task';
+
+import StyledForm, { StyledFooterForm, StyledFormControl } from '../../styles/Form';
+import StyledButton from '../../styles/Button';
 
 type TaskFormParams = {
   createTask: (task: ITask) => void;
@@ -12,25 +16,32 @@ export default function TaskForm({ createTask }: TaskFormParams) {
       create_date: '',
       finished: false
     },
-    onSubmit: (values) => {
-      console.log({values});
+    onSubmit: (values, formikBag) => {
       createTask(values);
-      formik.resetForm();
+      formikBag.resetForm();
     },
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
+    <StyledForm onSubmit={formik.handleSubmit}>
+      <StyledFormControl>
         <input
+          autoFocus
           autoComplete="off"
           required 
           type="text" 
           placeholder="Add new task" 
           {...formik.getFieldProps('title')} 
         />
-      </div>
-      <button type="submit">Create</button>
-    </form>
+      </StyledFormControl>
+      <StyledFooterForm>
+        {/* <StyledIconButton type="submit">
+          <IoCheckmark />
+        </StyledIconButton> */}
+        <StyledButton type="submit">
+          Create
+        </StyledButton>
+      </StyledFooterForm>
+    </StyledForm>
   )
 }

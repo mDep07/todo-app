@@ -1,6 +1,10 @@
 import { createGlobalStyle} from 'styled-components'
 
-export const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
+  * {
+    box-sizing: border-box
+  }
+
   body {
     background-color: ${({ theme }) => theme.backgroundColors.body};
     color: ${({ theme }) => theme.text.main};
@@ -8,3 +12,5 @@ export const GlobalStyles = createGlobalStyle`
     /* font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif; */
   }
 `
+
+export default GlobalStyles

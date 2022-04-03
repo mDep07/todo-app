@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { IoMoon, IoSunny } from 'react-icons/io5';
 
-import { GlobalStyles } from "./components/GlobalStyles";
+import GlobalStyles from "./styles/GlobalStyles";
 import { light, dark } from "./theme";
 import Container from './styles/Container';
 
