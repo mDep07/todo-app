@@ -1,82 +1,12 @@
-import React, { useReducer, Reducer, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { IoMoon, IoSunny } from 'react-icons/io5';
 
 import { GlobalStyles } from "./components/GlobalStyles";
 import { light, dark } from "./theme";
+import Container from './styles/Container';
 
-import type { ITask } from './interfaces/task';
-
-import Tasks from './components/Tasks/Tasks';
-import { orderTasks } from './utils/orderTasks';
-import TasksService from './services/tasks';
-const { getTasks, addTask, removeTask, updateTask } = TasksService();
-
-type TState = { tasks: ITask[] };
-type TAction =  { type: 'add', payload: ITask } | 
-                { type: 'remove', payload: string } | 
-                { type: 'finish', payload: { taskId: string, finished: boolean } };
-
-const reducer: Reducer<TState, TAction> = (state, action): TState => {
-  const { type, payload } = action;
-
-  switch(type) {
-    case 'add': {
-      const { tasks } = state;
-      const task = payload as ITask;
-      // if(typeof task === 'string') return state;
-      
-      const newTask: ITask = addTask(task);
-      const orderedTasks = orderTasks([...tasks, {...newTask}]);
-
-      return {
-        ...state,
-        tasks: orderedTasks
-      }
-    }
-    case 'remove': {
-      const { tasks } = state;
-      const taskId = payload as string;
-      // if(typeof taskId !== 'string') return state;
-
-      const removeTasks = removeTask(taskId);
-
-      return {
-        ...state,
-        tasks: [...tasks.filter(t => !removeTasks.includes(t.id))]
-      };
-    }
-    case 'finish': {
-      const { taskId, finished } = payload as { taskId: string, finished: boolean };
-      // if(typeof taskId !== 'string') return state;
-      
-      const tasksWithUpdated = updateTask(taskId, { finished });
-
-      return {
-        ...state,
-        tasks: tasksWithUpdated
-      };
-    }
-  }
-}
-
-const StyledContainer = styled.main`
-  background-color: ${({ theme }) => theme.backgroundColors.main};
-  border-radius: ${({ theme }) => theme.radius.lg};
-  /* padding: 1rem; */
-  max-width: 550px;
-  margin: 0 auto;
-  margin-top: 1rem;
-  min-height: calc(100vh - 2rem);
-  overflow-y: auto;
-  position: relative;
-`;
-
-const StyledTitle = styled.h1`
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 1.5rem;
-`;
+import TasksPage from './Pages/Tasks';
 
 const StyledSwitchTheme = styled.button`
     border: none;
@@ -96,8 +26,6 @@ const StyledSwitchTheme = styled.button`
 `;
 
 function App() {
-
-  const [state, dispatch] = useReducer(reducer, { tasks: getTasks() });
   const [theme, setTheme] = useState('light');
   
   useEffect(() => {
@@ -122,20 +50,16 @@ function App() {
   return (
     <ThemeProvider theme={getTheme()}>
       <GlobalStyles/>
-      <StyledContainer>
-        <div style={{ padding: 16 }}>
+      <Container>
+        <header style={{ padding: '1rem' }}>
           <StyledSwitchTheme title="Change theme mode" onClick={themeToggler}>
             { theme === 'light' ? <IoMoon /> : <IoSunny /> }
           </StyledSwitchTheme>
-          <StyledTitle>Todo App 🗒️</StyledTitle>
-          <Tasks 
-            tasks={state.tasks} 
-            create={(task: ITask) => dispatch({ type: 'add', payload: task })}
-            finish={(taskId: string, finished: boolean) => dispatch({ type: 'finish', payload: { taskId, finished } })}
-            remove={(taskId: string) => dispatch({ type: 'remove', payload: taskId })}
-          />
+        </header>
+        <div>
+          <TasksPage />
         </div>
-      </StyledContainer>
+      </Container>
     </ThemeProvider>
   );
 }
