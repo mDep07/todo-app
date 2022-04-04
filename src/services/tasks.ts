@@ -67,6 +67,7 @@ export default class TasksService {
     if(typeof data.finish !== 'undefined') {
       updatedTask.finished = data.finish;
       updatedTask.finished_date = data.finish ? moment().format() : '';
+      updatedTask.important = false;
     }
 
     if(typeof data.important !== 'undefined') {

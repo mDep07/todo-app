@@ -26,7 +26,7 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
   }
 
   return (
-    <StyledTasksItem checked={task.finished} highlight={task.important}>
+    <StyledTasksItem checked={task.finished} highlight={task.important && !task.finished}>
       <header>
         {
           !task.finished ? (

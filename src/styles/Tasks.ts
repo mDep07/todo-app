@@ -19,7 +19,7 @@ export const StyledTasksItem = styled.li<{ checked?: boolean, highlight?: boolea
   border-radius: ${({theme}) => theme.radius.sm};
   box-shadow: ${({theme}) => theme.shades.sm};
   background-color: ${({theme}) => theme.backgroundColors.secondary};
-  transition: border .15s ease-in-out;
+  transition: all .15s ease-in-out;
   
   &:hover {
     box-shadow: ${({theme}) => theme.shades.md};
@@ -82,7 +82,7 @@ export const StyledFooterTask = styled.footer`
   /* padding-left: 2rem; */
 
   & span {
-    background-color: ${({theme}) => theme.colors.warning};
+    background-color: ${({theme}) => theme.colors.secondary};
     color: white;
     padding: 0 3px;
     border-radius: ${({theme}) => theme.radius.xs};

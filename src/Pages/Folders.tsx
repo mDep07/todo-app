@@ -17,8 +17,8 @@ export default function Folders() {
     dispatch({ type: 'add', payload: newFolder })
   }
   
-  const handleRemove = (taskId: string) => {
-    const removedFolder = Folders.remove(taskId);
+  const handleRemove = (folderId: string) => {
+    const removedFolder = Folders.remove(folderId);
     if(!removedFolder) {
       return
     }
@@ -29,7 +29,7 @@ export default function Folders() {
   return (
     <section style={{ padding: '0 1rem' }}>
       <FolderForm create={handleCreate} />
-      <FoldersList folders={state.folders} />
+      <FoldersList folders={state.folders} removed={handleRemove} />
     </section>
   )
 }
