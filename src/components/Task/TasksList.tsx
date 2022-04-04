@@ -9,10 +9,9 @@ import StyledTasksContainer, { StyledTasksList } from '../../styles/Tasks'
 type TasksListParams = {
   tasks: ITask[],
   remove: (taskId: string) => void;
-  finish: (taskId: string, finished: boolean) => void;
-  important: (taskId: string, important: boolean) => void;
+  update: (taskId: string, data: { finish?: boolean, important?: boolean }) => void;
 }
-export default function TasksList({ tasks, remove, finish, important }: TasksListParams) {
+export default function TasksList({ tasks, remove, update }: TasksListParams) {
   return (
     <StyledTasksContainer>
       <StyledTasksList>
@@ -22,8 +21,8 @@ export default function TasksList({ tasks, remove, finish, important }: TasksLis
               key={task.id} 
               task={task}
               removed={() => remove(task.id)} 
-              finished={(finished) => finish(task.id, finished)}
-              makeImportant={(makeImportant) => important(task.id, makeImportant)}
+              finished={(finish) => update(task.id, { finish })}
+              makeImportant={(important) => update(task.id, { important })}
             />
           ))
         }

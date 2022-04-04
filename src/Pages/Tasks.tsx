@@ -3,14 +3,41 @@ import { ITask } from "../interfaces/task";
 import TaskForm from "../components/Task/TaskForm"
 import TasksList from "../components/Task/TasksList";
 import useTasks from "../hooks/useTasks";
+import TasksService from "../services/tasks";
 
 export default function Tasks() {
   const [state, dispatch] = useTasks();
 
-  const handleCreate = (task: ITask) => dispatch({ type: 'add', payload: task })
-  const handleRemove = (taskId: string) => dispatch({ type: 'remove', payload: taskId })
-  const handleFinish = (taskId: string, finished: boolean) => dispatch({ type: 'finish', payload: { taskId, finished } })
-  const handleImportant = (taskId: string, important: boolean) => dispatch({ type: 'makeImportant', payload: { taskId, important } })
+  const Tasks = new TasksService();
+
+  const handleCreate = (task: ITask) => {
+    const newTask = Tasks.add(task);
+    dispatch({ type: 'add', payload: newTask })
+  }
+  
+  const handleRemove = (taskId: string) => {
+    const removedTask = Tasks.remove(taskId);
+    if(!removedTask) {
+      return
+    }
+
+    dispatch({ type: 'remove', payload: removedTask })
+  }
+
+  const handleUpdate = (taskId: string, data: { finish?: boolean, important?: boolean }) => {
+    const updatedTask = Tasks.update(taskId, data);
+    if(!updatedTask) {
+      return
+    }
+    dispatch({ type: 'update', payload: updatedTask })
+  }
+  // const handleImportant = (taskId: string, important: boolean) => {
+  //   const updatedTask = Tasks.makeImportant(taskId, important);
+  //   if(!updatedTask) {
+  //     return
+  //   }
+  //   dispatch({ type: 'update', payload: updatedTask })
+  // }
 
   return (
     <section style={{ padding: '0 1rem' }}>
@@ -19,8 +46,7 @@ export default function Tasks() {
       <TasksList 
         tasks={state.tasks} 
         remove={handleRemove}
-        finish={handleFinish}
-        important={handleImportant}
+        update={handleUpdate}
       />
     </section>
   )
