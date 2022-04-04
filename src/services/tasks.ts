@@ -1,78 +1,132 @@
 import { ITask } from '../interfaces/task';
 import { orderTasks } from '../utils/orderTasks';
-import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 
+export default class TasksService {
 
-export default function TasksService() {
-  const KEY_ITEM = 'tasks';
-  const getTasks = () => {
-    const tasks: ITask[] = JSON.parse(localStorage.getItem(KEY_ITEM) || '[]');
-    const tasksFiltered = tasks.filter(t => 
-      moment().startOf("day").isSame(moment(t.create_date).startOf("day")) || !t.finished
-    )
-    return tasksFiltered;
+  private KEY_ITEMS: string;
+
+  constructor() {
+    this.KEY_ITEMS = 'tasks';
   }
 
-  const addTask = (task: ITask) => {
-    const tasks = getTasks();
+  getAll() {
+    const tasks: ITask[] = JSON.parse(localStorage.getItem(this.KEY_ITEMS) || '[]');
+    // const tasksFiltered = tasks.filter(t => 
+    //   moment().startOf("day").isSame(moment(t.create_date).startOf("day")) || !t.finished
+    // )
+    return tasks;
+  }
+
+  getById(id: string) {
+    const tasks = this.getAll(); 
+    return tasks.find(task => task.id === id)
+  }
+
+  add(task: ITask) {
+    const tasks = this.getAll();
     
     const newTask: ITask = { 
       id: uuidv4(), 
       title: task.title, 
-      create_date: task.create_date, 
+      create_date: moment().format(), 
       finished: false, 
       task_id: task.task_id, 
       important: task.important
     };
 
     const orderedTasks = orderTasks([...tasks, {...newTask}]);
-    localStorage.setItem(KEY_ITEM, JSON.stringify(orderedTasks));
+    localStorage.setItem(this.KEY_ITEMS, JSON.stringify(orderedTasks));
     
     return newTask;
   }
 
-  const removeTask = (taskId: string) => {
-    const tasks = getTasks();
-    const taskAndSubTasksIds = tasks.filter(t => t.task_id === taskId || t.id === taskId).map(t => t.id);
+  remove(id: string) {
+    const tasks = this.getAll();
+    const task = tasks.find(task => task.id === id);
+    if(!task) {
+      return
+    }
 
-    const tasksWithoutRemoved = [...tasks.filter(t => !taskAndSubTasksIds.includes(t.id))];
-    localStorage.setItem(KEY_ITEM, JSON.stringify(tasksWithoutRemoved));
+    const orderedTasks = orderTasks([...tasks.filter(task => task.id !== id)]);
+    localStorage.setItem(this.KEY_ITEMS, JSON.stringify(orderedTasks));
 
-    return taskAndSubTasksIds;
+    return task;
   }
 
-  const updateTask = (taskId: string, { finished }: { finished: boolean }) => {
-    const tasks = getTasks();
-    const taskAndSubTasksIds = tasks.filter(t => t.task_id === taskId || t.id === taskId).map(t => t.id);
+  finish(id: string, finish: boolean) {
+    const tasks = this.getAll();
+    const task = tasks.find(task => task.id === id);
+    if(!task) {
+      return
+    }
 
-    const tasksWithUpdated = [
-      ...tasks.map(task => {
-        if(taskAndSubTasksIds.includes(task.id)) {
-          if(task.id === taskId) {
-            return {
-              ...task, 
-              finished: finished, 
-              finished_date: finished ? moment().format() : '' 
-            }
-          }
-          
-          return {
-            ...task, 
-            finished: finished ? finished : task.finished, 
-            finished_date: finished ? moment().format() : '' 
-          }
-        }
+    const updatedTask: ITask = { 
+      ...task, 
+      finished: finish, 
+      finished_date: finish ? moment().format() : ''
+    }
 
-        return task;
-      })
-    ];
-    
-    localStorage.setItem(KEY_ITEM, JSON.stringify(tasksWithUpdated));
+    const orderedTasks = orderTasks([...tasks.map(task => task.id === id ? { ...updatedTask } : task)]);
+    localStorage.setItem(this.KEY_ITEMS, JSON.stringify(orderedTasks));
 
-    return tasksWithUpdated;
+    return updatedTask;
   }
 
+  makeImportant(id: string, important: boolean) {
+    const tasks = this.getAll();
+    const task = tasks.find(task => task.id === id);
+    if(!task) {
+      return
+    }
 
-  return { getTasks, addTask, removeTask, updateTask }
+    const updatedTask: ITask = { 
+      ...task, 
+      important: important
+    }
+
+    const orderedTasks = orderTasks([...tasks.map(task => task.id === id ? { ...updatedTask } : task)]);
+    localStorage.setItem(this.KEY_ITEMS, JSON.stringify(orderedTasks));
+
+    return updatedTask;
+  }
 }
+
+// export default function TasksService() {
+
+
+//   const updateTask = (taskId: string, { finished }: { finished: boolean }) => {
+//     const tasks = getTasks();
+//     const taskAndSubTasksIds = tasks.filter(t => t.task_id === taskId || t.id === taskId).map(t => t.id);
+
+//     const tasksWithUpdated = [
+//       ...tasks.map(task => {
+//         if(taskAndSubTasksIds.includes(task.id)) {
+//           if(task.id === taskId) {
+//             return {
+//               ...task, 
+//               finished: finished, 
+//               finished_date: finished ? moment().format() : '' 
+//             }
+//           }
+          
+//           return {
+//             ...task, 
+//             finished: finished ? finished : task.finished, 
+//             finished_date: finished ? moment().format() : '' 
+//           }
+//         }
+
+//         return task;
+//       })
+//     ];
+    
+//     localStorage.setItem(KEY_ITEM, JSON.stringify(tasksWithUpdated));
+
+//     return tasksWithUpdated;
+//   }
+
+
+//   return { getTasks, addTask, removeTask, updateTask }
+// }

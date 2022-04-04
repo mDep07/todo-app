@@ -37,13 +37,19 @@ const StyledButton = styled.button<{ color?: colors, checked?: boolean }>`
 `;
 
 export const StyledIconButton = styled(StyledButton)`
+  ${({checked, theme, color}) => checked && `
+    --color: white;
+    --bg-color: ${!color ? theme.colors.main : theme.colors[color]};
+  `}
+
   padding: 5px;
   font-size: 1rem;
   display: flex;
   align-items: center;
 
   &:focus {
-    outline-width: 1px;
+    outline: none;
+    transform: scale(1.1);
   }
 
   & svg {

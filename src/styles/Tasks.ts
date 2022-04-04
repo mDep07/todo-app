@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { StyledIconButton } from './Button'
-
 const StyledTasksContainer = styled.section`
   margin-top: 1rem;
 `;
@@ -13,13 +11,14 @@ export const StyledTasksList = styled.ul`
   gap: 5px
 `;
 
-export const StyledTasksItem = styled.li<{ checked?: boolean }>`
+export const StyledTasksItem = styled.li<{ checked?: boolean, highlight?: boolean }>`
   list-style-type: none;
   border: 1px solid red;
   padding: .25rem;
-  border: 1px solid ${({theme}) => theme.backgroundColors.secondary};
+  border: 2px solid ${({theme, highlight}) => highlight ? theme.colors.info : theme.backgroundColors.secondary};
   border-radius: ${({theme}) => theme.radius.sm};
   box-shadow: ${({theme}) => theme.shades.sm};
+  background-color: ${({theme}) => theme.backgroundColors.secondary};
   
   &:hover {
     box-shadow: ${({theme}) => theme.shades.md};
@@ -60,6 +59,32 @@ export const StyledButtonCheck = styled.button<{ checked?: boolean }>`
   color: ${({theme, checked}) => checked ? theme.text.main : theme.text.secondary};
   display: grid;
   place-content: center;
+`;
+
+export const StyledDetailsTask = styled.section`
+  margin: .25rem 0;
+  & small {
+    font-size: 12px;
+    color: ${({theme}) => theme.text.secondary}
+  }
+`;
+
+
+export const StyledFooterTask = styled.footer`
+  font-size: 10px;
+  /* padding-left: 2rem; */
+
+  & span {
+    background-color: ${({theme}) => theme.colors.warning};
+    color: white;
+    padding: 0 3px;
+    border-radius: ${({theme}) => theme.radius.xs};
+    display: inline-flex;
+    align-items: center;
+  }
+  & span:not(:first-child) {
+    margin-left: 5px;
+  }
 `;
 
 export default StyledTasksContainer;
