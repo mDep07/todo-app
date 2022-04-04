@@ -79,10 +79,13 @@ export const StyledDetailsTask = styled.section`
 
 export const StyledFooterTask = styled.footer`
   font-size: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   /* padding-left: 2rem; */
 
   & span {
-    background-color: ${({theme}) => theme.colors.secondary};
+    background-color: ${({theme}) => theme.colors.main};
     color: white;
     padding: 0 3px;
     border-radius: ${({theme}) => theme.radius.xs};
@@ -100,9 +103,6 @@ export const StyledFooterTask = styled.footer`
     &.danger {
       background-color: ${({theme}) => theme.colors.danger};
     }
-  }
-  & span:not(:first-child) {
-    margin-left: 5px;
   }
 `;
 

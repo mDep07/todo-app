@@ -7,11 +7,12 @@ import TaskForm from "../components/Tasks/TaskForm"
 import TasksList from "../components/Tasks/TasksList";
 import useTasks from "../hooks/useTasks";
 import TasksService from "../services/tasks";
-// import FoldersService from '../services/folders';
+import FoldersService from '../services/folders';
 
 export default function Tasks() {
   
   const Tasks = new TasksService();
+  const Folders = new FoldersService();
 
   const [state, dispatch] = useTasks();
   const params = useParams();
@@ -49,7 +50,7 @@ export default function Tasks() {
   
   return (
     <section style={{ padding: '0 1rem' }}>
-      <TaskForm create={handleCreate} />
+      <TaskForm create={handleCreate} foldersList={Folders.getAll()} />
       <TasksList 
         tasks={state.tasks} 
         remove={handleRemove}

@@ -1,3 +1,5 @@
+import { IFolder } from "./folder";
+
 export interface ITask {
   id: string;
   title: string;
@@ -7,4 +9,7 @@ export interface ITask {
   finished_date?: string;
   expiration_date?: string;
   important?: boolean;
+  folderId?: string;
+  folder?: IFolder;
+  tagsId?: string[];
 }

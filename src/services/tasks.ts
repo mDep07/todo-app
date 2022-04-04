@@ -13,9 +13,6 @@ export default class TasksService {
 
   getAll() {
     const tasks: ITask[] = JSON.parse(localStorage.getItem(this.KEY_ITEMS) || '[]');
-    // const tasksFiltered = tasks.filter(t => 
-    //   moment().startOf("day").isSame(moment(t.create_date).startOf("day")) || !t.finished
-    // )
     return tasks;
   }
 
@@ -33,7 +30,10 @@ export default class TasksService {
       create_date: moment().format(), 
       finished: false, 
       task_id: task.task_id, 
-      important: task.important
+      important: task.important,
+      folderId: task.folderId,
+      folder: task.folder,
+      tagsId: task.tagsId,
     };
 
     const orderedTasks = orderTasks([...tasks, newTask]);

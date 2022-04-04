@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React, { useState } from 'react'
-import { IoClose, IoCheckmark, IoAlert } from 'react-icons/io5';
+import { IoClose, IoCheckmark, IoAlert, IoFolderOutline } from 'react-icons/io5';
 
 import { ITask } from "../../interfaces/task";
 
@@ -65,6 +65,13 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
         </StyledDetailsTask>
       }
       <StyledFooterTask>
+        {
+          task.folderId && task.folder && 
+          <span className="">
+            <IoFolderOutline style={{ marginRight: 5 }} />
+            {task.folder.name}
+          </span>
+        }
         {task.finished && <span className="success">Finished</span>}
         {task.important && <span className="info">Important</span>}
       </StyledFooterTask>
