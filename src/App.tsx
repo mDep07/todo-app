@@ -9,20 +9,20 @@ import Container from './styles/Container';
 import TasksPage from './Pages/Tasks';
 
 const StyledSwitchTheme = styled.button`
-    border: none;
-    padding: 2px;
-    background-color: transparent;
-    color: darkgray;
-    font-size: 1.8rem;
-    display: flex;
-    border-radius: 10px;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.05);
-    }
-    &:active {
-      transform: scale(.95);
-    }
+  border: none;
+  padding: 2px;
+  background-color: transparent;
+  color: darkgray;
+  font-size: 1.8rem;
+  display: flex;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:active {
+    transform: scale(.95);
+  }
 `;
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
     }
   }, [])
 
-  const themeToggler = () => {
+  const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
     localStorage.setItem('mode', theme === 'light' ? 'dark' : 'light')
   }
@@ -52,7 +52,7 @@ function App() {
       <GlobalStyles/>
       <Container>
         <header style={{ padding: '1rem' }}>
-          <StyledSwitchTheme title="Change theme mode" onClick={themeToggler}>
+          <StyledSwitchTheme title="Change theme mode" onClick={toggleTheme}>
             { theme === 'light' ? <IoMoon /> : <IoSunny /> }
           </StyledSwitchTheme>
         </header>

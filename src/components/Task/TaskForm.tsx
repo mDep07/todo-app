@@ -14,7 +14,8 @@ export default function TaskForm({ createTask }: TaskFormParams) {
       id: '',
       title: '',
       create_date: '',
-      finished: false
+      finished: false,
+      important: false,
     },
     onSubmit: (values, formikBag) => {
       createTask(values);
@@ -35,9 +36,14 @@ export default function TaskForm({ createTask }: TaskFormParams) {
         />
       </StyledFormControl>
       <StyledFooterForm>
-        {/* <StyledIconButton type="submit">
-          <IoCheckmark />
-        </StyledIconButton> */}
+        <StyledButton 
+          checked={formik.values.important} 
+          type="button" 
+          color="info" 
+          onClick={() => formik.setFieldValue('important', !formik.values.important)}
+        >
+          Make important
+        </StyledButton>
         <StyledButton type="submit">
           Create
         </StyledButton>

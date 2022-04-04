@@ -36,7 +36,7 @@ export default class TasksService {
       important: task.important
     };
 
-    const orderedTasks = orderTasks([...tasks, {...newTask}]);
+    const orderedTasks = orderTasks([...tasks, newTask]);
     localStorage.setItem(this.KEY_ITEMS, JSON.stringify(orderedTasks));
     
     return newTask;

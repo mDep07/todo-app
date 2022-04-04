@@ -6,6 +6,11 @@ const StyledButton = styled.button<{ color?: colors, checked?: boolean }>`
   --color: ${({theme, color}) => !color ? theme.colors.main : theme.colors[color]};
   --bg-color: ${({theme, color}) => !color ? theme.alphaColors.main : theme.alphaColors[color]};
 
+  ${({checked, theme, color}) => checked && `
+    --color: white;
+    --bg-color: ${!color ? theme.colors.main : theme.colors[color]};
+  `}
+
   border: none;
   font-size: 12px;
   text-transform: uppercase;
@@ -37,11 +42,6 @@ const StyledButton = styled.button<{ color?: colors, checked?: boolean }>`
 `;
 
 export const StyledIconButton = styled(StyledButton)`
-  ${({checked, theme, color}) => checked && `
-    --color: white;
-    --bg-color: ${!color ? theme.colors.main : theme.colors[color]};
-  `}
-
   padding: 5px;
   font-size: 1rem;
   display: flex;

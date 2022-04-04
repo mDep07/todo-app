@@ -30,11 +30,11 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
       <header>
         {
           !task.finished ? (
-            <StyledButtonCheck onClick={toogleFinished}>
+            <StyledButtonCheck onClick={toogleFinished} title="Finished">
                 <IoCheckmark />
             </StyledButtonCheck>
           ) : (
-            <StyledButtonCheck checked onClick={toogleFinished}>
+            <StyledButtonCheck checked onClick={toogleFinished} title="Undo Finished">
                 <IoCheckmark />
             </StyledButtonCheck>
           )
@@ -43,24 +43,29 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
           {task.title}
         </button>
         <span style={{ display: 'flex', gap: 5 }}>
-          <StyledIconButton checked={task.important} color="info" onClick={toogleImportant}>
-            <IoAlert />
-          </StyledIconButton>
-          <StyledIconButton color="danger" onClick={removed}>
-            <IoClose />
-          </StyledIconButton>
+          {
+            !task.finished &&
+            <>
+              <StyledIconButton checked={task.important} color="info" onClick={toogleImportant} title="Make important">
+                <IoAlert />
+              </StyledIconButton>
+              <StyledIconButton color="danger" onClick={() => removed()} title="Delete">
+                <IoClose />
+              </StyledIconButton>
+            </> 
+          }
         </span>
       </header>
       {
         showDetails && 
         <StyledDetailsTask>
           <small>Created at: {moment(task.create_date).format('LLL')}</small>
+          {task.finished_date && <small>Finished at: {moment(task.finished_date).format('LLL')}</small>}
         </StyledDetailsTask>
       }
-      <StyledFooterTask>  
-        <span>Etiqueta</span>
-        <span>Expira en 2022-01-41</span>
-        <span>Desarrollo</span>
+      <StyledFooterTask>
+        {task.finished && <span className="success">Finished</span>}
+        {task.important && <span className="info">Important</span>}
       </StyledFooterTask>
     </StyledTasksItem>  
   )

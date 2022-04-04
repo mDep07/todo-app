@@ -25,29 +25,6 @@ export default function TasksList({ tasks, remove, finish, important }: TasksLis
               finished={(finished) => finish(task.id, finished)}
               makeImportant={(makeImportant) => important(task.id, makeImportant)}
             />
-            // <StyledTasksItem key={task.id} checked={task.finished}>
-            //   <header>
-            //     {
-            //       !task.finished ? (
-            //         <StyledButtonCheck onClick={() => finish(task.id, true)}>
-            //             <IoCheckmark />
-            //         </StyledButtonCheck>
-            //       ) : (
-            //         <StyledButtonCheck checked onClick={() => finish(task.id, false)}>
-            //             <IoCheckmark />
-            //         </StyledButtonCheck>
-            //       )
-            //     } 
-            //     <button className="select">
-            //       {task.title}
-            //     </button>
-            //     <span>
-            //       <StyledIconButton color="danger" onClick={() => remove(task.id)}>
-            //         <IoClose />
-            //       </StyledIconButton>
-            //     </span>
-            //   </header>
-            // </StyledTasksItem>
           ))
         }
       </StyledTasksList>

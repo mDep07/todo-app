@@ -7,7 +7,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  box-shadow: ${({theme}) => theme.shades.lg}
+  box-shadow: ${({theme}) => theme.shades.md}
 `;
 
 export const StyledFormControl = styled.div`
@@ -26,6 +26,7 @@ export const StyledFormControl = styled.div`
 export const StyledFooterForm = styled.footer`
   display: flex;
   justify-content: end;
+  gap: 10px
 `;
 
 export default StyledForm;

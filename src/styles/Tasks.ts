@@ -63,7 +63,10 @@ export const StyledButtonCheck = styled.button<{ checked?: boolean }>`
 
 export const StyledDetailsTask = styled.section`
   margin: .25rem 0;
+  padding: .25rem;
+
   & small {
+    display: block;
     font-size: 12px;
     color: ${({theme}) => theme.text.secondary}
   }
@@ -81,6 +84,18 @@ export const StyledFooterTask = styled.footer`
     border-radius: ${({theme}) => theme.radius.xs};
     display: inline-flex;
     align-items: center;
+
+    &.success {
+      background-color: ${({theme}) => theme.colors.success};
+    }
+
+    &.info {
+      background-color: ${({theme}) => theme.colors.info};
+    }
+
+    &.danger {
+      background-color: ${({theme}) => theme.colors.danger};
+    }
   }
   & span:not(:first-child) {
     margin-left: 5px;

@@ -21,10 +21,9 @@ export default function useTasks() {
       case 'add': {
         const { tasks } = state;
         const task = payload as ITask;
-        // if(typeof task === 'string') return state;
         
         const newTask: ITask = Tasks.add(task);
-        const orderedTasks = orderTasks([...tasks, {...newTask}]);
+        const orderedTasks = orderTasks([...tasks, newTask]);
 
         return {
           ...state,
@@ -32,23 +31,22 @@ export default function useTasks() {
         }
       }
       case 'remove': {
-        const { tasks } = state;
         const taskId = payload as string;
-        // if(typeof taskId !== 'string') return state;
 
-        const removeTask = Tasks.remove(taskId);
-        if(!removeTask) {
+        const removedTask = Tasks.remove(taskId);
+        if(!removedTask) {
           return state
         }
+        
+        const tasksFiltered = state.tasks.filter(task => task.id !== removedTask.id)
 
         return {
           ...state,
-          tasks: [...tasks.filter(t => t.id !== removeTask.id)]
+          tasks: tasksFiltered
         };
       }
       case 'finish': {
         const { taskId, finished } = payload as { taskId: string, finished: boolean };
-        // if(typeof taskId !== 'string') return state;
         
         const updatedTask = Tasks.finish(taskId, finished);
         if(!updatedTask) {
@@ -74,6 +72,8 @@ export default function useTasks() {
           tasks: state.tasks.map(task => task.id === updatedTask.id ? { ...updatedTask } : task)
         };
       }
+      default:
+        return state
     }
   }
 
