@@ -27,9 +27,9 @@ export default function TaskForm({ createTask }: TaskFormParams) {
     <StyledForm onSubmit={formik.handleSubmit}>
       <StyledFormControl>
         <input
-          autoFocus
-          autoComplete="off"
           required 
+          minLength={3}
+          autoComplete="off"
           type="text" 
           placeholder="Add new task" 
           {...formik.getFieldProps('title')} 

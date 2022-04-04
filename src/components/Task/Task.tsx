@@ -59,8 +59,9 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
       {
         showDetails && 
         <StyledDetailsTask>
-          <small>Created at: {moment(task.create_date).format('LLL')}</small>
-          {task.finished_date && <small>Finished at: {moment(task.finished_date).format('LLL')}</small>}
+          <small>
+            {showDateFormat(task.create_date, task.finished_date)}
+          </small>
         </StyledDetailsTask>
       }
       <StyledFooterTask>
@@ -69,4 +70,15 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
       </StyledFooterTask>
     </StyledTasksItem>  
   )
+}
+
+const showDateFormat = (startDate: string, endDate?: string): string => {
+  let resultDate = moment(startDate).format('LLL');
+
+  if(endDate) {
+    const isSameDay = moment(startDate, 'yyyy-DD-MM').isSame(moment(endDate, 'yyyy-DD-MM'));
+    const endDateFormat = isSameDay ? moment(endDate).format('LT') : moment(endDate).format('LLL');
+    resultDate += ` • ${endDateFormat}`
+  }
+  return resultDate
 }
