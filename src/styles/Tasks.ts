@@ -53,6 +53,7 @@ export const StyledButtonCheck = styled.button<{ checked?: boolean }>`
   background-color: transparent;
   cursor: pointer;
   font-size: 1.4rem;
+  font-weight: 200;
   padding: 0;
   /* background-color: transparent; */
   border: none;

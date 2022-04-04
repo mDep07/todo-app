@@ -40,9 +40,9 @@ const light: DefaultTheme = {
     secondary: "#636363",
   },
   shades: {
-    sm: "0 1px 2px #d4d4d4",
-    md: "0 2px 3px #d4d4d4",
-    lg: "0 4px 8px #d4d4d4",
+    sm: "0 1px 2px #e0e0e0",
+    md: "0 2px 3px #e0e0e0",
+    lg: "0 4px 8px #e0e0e0",
   },
   ...colors,
   ...borderRadius

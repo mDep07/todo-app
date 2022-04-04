@@ -17,7 +17,7 @@ export const StyledFormControl = styled.div`
     border: none;
     background-color: transparent;
     outline: none;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: ${({theme}) => theme.text.main};
     /* border-bottom: 1px solid ${({theme}) => theme.backgroundColors.secondary}; */
   }

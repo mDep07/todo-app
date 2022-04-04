@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
-
 import { ITask } from '../../interfaces/task';
 
 import StyledForm, { StyledFooterForm, StyledFormControl } from '../../styles/Form';
@@ -9,6 +9,8 @@ type TaskFormParams = {
   createTask: (task: ITask) => void;
 }
 export default function TaskForm({ createTask }: TaskFormParams) {
+  const [showButtons, setShowButtons] = useState(false);
+  
   const formik = useFormik({
     initialValues: {
       id: '',
@@ -20,7 +22,7 @@ export default function TaskForm({ createTask }: TaskFormParams) {
     onSubmit: (values, formikBag) => {
       createTask(values);
       formikBag.resetForm();
-    },
+    }
   });
 
   return (
@@ -31,23 +33,27 @@ export default function TaskForm({ createTask }: TaskFormParams) {
           minLength={3}
           autoComplete="off"
           type="text" 
-          placeholder="Add new task" 
+          placeholder="Add new task"
+          onFocus={() => setShowButtons(true)}
           {...formik.getFieldProps('title')} 
         />
       </StyledFormControl>
-      <StyledFooterForm>
-        <StyledButton 
-          checked={formik.values.important} 
-          type="button" 
-          color="info" 
-          onClick={() => formik.setFieldValue('important', !formik.values.important)}
-        >
-          Make important
-        </StyledButton>
-        <StyledButton type="submit">
-          Create
-        </StyledButton>
-      </StyledFooterForm>
+      {
+        showButtons &&
+        <StyledFooterForm>
+          <StyledButton 
+            checked={formik.values.important} 
+            type="button" 
+            color="info" 
+            onClick={() => formik.setFieldValue('important', !formik.values.important)}
+          >
+            Make important
+          </StyledButton>
+          <StyledButton type="submit">
+            Create
+          </StyledButton>
+        </StyledFooterForm>
+      }
     </StyledForm>
   )
 }
