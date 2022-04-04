@@ -41,7 +41,6 @@ export default function Tasks() {
 
   return (
     <section style={{ padding: '0 1rem' }}>
-      <h3>Tasks</h3>
       <TaskForm createTask={handleCreate} />
       <TasksList 
         tasks={state.tasks} 
