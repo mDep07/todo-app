@@ -1,7 +1,7 @@
 import { ITask } from "../interfaces/task";
 
-import TaskForm from "../components/Task/TaskForm"
-import TasksList from "../components/Task/TasksList";
+import TaskForm from "../components/Tasks/TaskForm"
+import TasksList from "../components/Tasks/TasksList";
 import useTasks from "../hooks/useTasks";
 import TasksService from "../services/tasks";
 
@@ -41,7 +41,7 @@ export default function Tasks() {
 
   return (
     <section style={{ padding: '0 1rem' }}>
-      <TaskForm createTask={handleCreate} />
+      <TaskForm create={handleCreate} />
       <TasksList 
         tasks={state.tasks} 
         remove={handleRemove}

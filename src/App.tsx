@@ -42,7 +42,9 @@ function App() {
         </header>
         <Routes>
           <Route path="/" element={<TasksPage />} />
-          <Route path="folders" element={<FoldersPage />} />
+          <Route path="folders" element={<FoldersPage />}>
+            <Route path=":id" element={<TasksPage />} />
+          </Route>
           <Route path="tags" element={<TagsPage />} />
         </Routes>
       </Container>

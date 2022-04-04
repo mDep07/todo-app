@@ -22,6 +22,8 @@ export const StyledTasksItem = styled.li<{ checked?: boolean, highlight?: boolea
   
   &:hover {
     box-shadow: ${({theme}) => theme.shades.md};
+    border-style: dotted;
+    border-color: ${({theme}) => theme.text.secondary};
   }
 
   & header {

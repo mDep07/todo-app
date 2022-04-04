@@ -6,9 +6,9 @@ import StyledForm, { StyledFooterForm, StyledFormControl } from '../../styles/Fo
 import StyledButton from '../../styles/Button';
 
 type TaskFormParams = {
-  createTask: (task: ITask) => void;
+  create: (task: ITask) => void;
 }
-export default function TaskForm({ createTask }: TaskFormParams) {
+export default function TaskForm({ create }: TaskFormParams) {
   const [showButtons, setShowButtons] = useState(false);
   
   const formik = useFormik({
@@ -20,7 +20,7 @@ export default function TaskForm({ createTask }: TaskFormParams) {
       important: false,
     },
     onSubmit: (values, formikBag) => {
-      createTask(values);
+      create(values);
       formikBag.resetForm();
     }
   });

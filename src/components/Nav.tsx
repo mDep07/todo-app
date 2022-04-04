@@ -17,7 +17,7 @@ export default function Nav({ theme, toggleTheme }: { theme: string, toggleTheme
             ['Tags', '/tags'],
           ].map(([label, path]) => (
             <li key={label}>
-              <Link to={path} className={location.pathname === path ? 'active' : ''}>
+              <Link to={path} className={location.pathname.startsWith(path) ? 'active' : ''}>
                 {label}
               </Link>
             </li>
