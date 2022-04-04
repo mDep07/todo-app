@@ -41,10 +41,10 @@ function App() {
           <Navbar {...{ theme, toggleTheme }} />
         </header>
         <Routes>
-          <Route path="/" element={<TasksPage />} />
-          <Route path="folders" element={<FoldersPage />}>
-            <Route path=":id" element={<TasksPage />} />
+          <Route path="tasks" element={<TasksPage />}>
+            <Route path="folder/:folderId" element={<TasksPage />} />
           </Route>
+          <Route path="folders" element={<FoldersPage />} />
           <Route path="tags" element={<TagsPage />} />
         </Routes>
       </Container>

@@ -1,14 +1,29 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { ITask } from "../interfaces/task";
 
 import TaskForm from "../components/Tasks/TaskForm"
 import TasksList from "../components/Tasks/TasksList";
 import useTasks from "../hooks/useTasks";
 import TasksService from "../services/tasks";
+// import FoldersService from '../services/folders';
 
 export default function Tasks() {
-  const [state, dispatch] = useTasks();
-
+  
   const Tasks = new TasksService();
+
+  const [state, dispatch] = useTasks();
+  const params = useParams();
+
+
+  useEffect(() => {
+    const { folderId } = params;
+    if(folderId) {
+      console.log({folderId})
+    }
+
+  }, [params])
 
   const handleCreate = (task: ITask) => {
     const newTask = Tasks.add(task);
@@ -31,14 +46,7 @@ export default function Tasks() {
     }
     dispatch({ type: 'update', payload: updatedTask })
   }
-  // const handleImportant = (taskId: string, important: boolean) => {
-  //   const updatedTask = Tasks.makeImportant(taskId, important);
-  //   if(!updatedTask) {
-  //     return
-  //   }
-  //   dispatch({ type: 'update', payload: updatedTask })
-  // }
-
+  
   return (
     <section style={{ padding: '0 1rem' }}>
       <TaskForm create={handleCreate} />

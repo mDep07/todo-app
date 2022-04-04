@@ -12,7 +12,7 @@ export default function Nav({ theme, toggleTheme }: { theme: string, toggleTheme
       <ul>
         {
           [
-            ['Tasks', '/'],
+            ['Tasks', '/tasks'],
             ['Folders', '/folders'],
             ['Tags', '/tags'],
           ].map(([label, path]) => (

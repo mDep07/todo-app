@@ -19,11 +19,12 @@ export const StyledTasksItem = styled.li<{ checked?: boolean, highlight?: boolea
   border-radius: ${({theme}) => theme.radius.sm};
   box-shadow: ${({theme}) => theme.shades.sm};
   background-color: ${({theme}) => theme.backgroundColors.secondary};
+  transition: border .15s ease-in-out;
   
   &:hover {
     box-shadow: ${({theme}) => theme.shades.md};
-    border-style: dotted;
-    border-color: ${({theme}) => theme.text.secondary};
+    /* border-style: dotted; */
+    border-color: ${({theme}) => theme.colors.main};
   }
 
   & header {
