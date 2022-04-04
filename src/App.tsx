@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link } from "react-router-dom";
-import styled, { ThemeProvider } from 'styled-components';
-import { IoMoon, IoSunny } from 'react-icons/io5';
+import { Routes, Route } from "react-router-dom";
+import { ThemeProvider } from 'styled-components';
 
 import GlobalStyles from "./styles/GlobalStyles";
 import { light, dark } from "./theme";
@@ -11,23 +10,6 @@ import Navbar from './components/Nav';
 import TasksPage from './Pages/Tasks';
 import FoldersPage from './Pages/Folders';
 import TagsPage from './Pages/Tags';
-
-const StyledSwitchTheme = styled.button`
-  border: none;
-  padding: 2px;
-  background-color: transparent;
-  color: darkgray;
-  font-size: 1.8rem;
-  display: flex;
-  border-radius: 10px;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.05);
-  }
-  &:active {
-    transform: scale(.95);
-  }
-`;
 
 function App() {
   const [theme, setTheme] = useState('light');
@@ -57,19 +39,6 @@ function App() {
       <Container>
         <header style={{ padding: '1rem' }}>
           <Navbar {...{ theme, toggleTheme }} />
-          {/* <div>
-            <StyledSwitchTheme title="Change theme mode" onClick={toggleTheme}>
-              { theme === 'light' ? <IoMoon /> : <IoSunny /> }
-            </StyledSwitchTheme>
-          </div>
-          <div>
-            <Link to="/">
-              Tasks
-            </Link>
-            <Link to="folders">
-              Folders
-            </Link>
-          </div> */}
         </header>
         <Routes>
           <Route path="/" element={<TasksPage />} />
