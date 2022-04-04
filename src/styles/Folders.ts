@@ -18,13 +18,14 @@ export const StyledFolderItemName = styled.div`
   flex: initial;
   width: 100%;
   font-size: 1rem;
+  font-weight: 300;
 `;
 
 export const StyledFolderItem = styled.div`
   position: relative;
-  padding: 10px;
+  padding: 5px;
   border: 2px solid ${({theme}) => theme.backgroundColors.secondary};
-  border-radius: ${({theme}) => theme.radius.md};
+  border-radius: ${({theme}) => theme.radius.sm};
   color: ${({theme}) => theme.text.main};
   background-color: ${({theme}) => theme.backgroundColors.secondary};
   box-shadow: ${({theme}) => theme.shades.sm};
