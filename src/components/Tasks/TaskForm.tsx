@@ -89,6 +89,11 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
                   </select>
                 </div> 
               }
+
+              <div>
+                <label>Algo</label> 
+                <input type="text" /> 
+              </div>
             </StyledFooterConfig>
           }
           <section className="actions">

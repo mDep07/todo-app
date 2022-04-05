@@ -38,7 +38,7 @@ export const StyledFooterForm = styled.footer`
 
 export const StyledFooterConfig = styled.section`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   padding: 10px 0;
   & div {
@@ -51,10 +51,11 @@ export const StyledFooterConfig = styled.section`
 
     & input,
     & select {
-      padding: 5px;
+      padding: 10px;
       outline: none;
       border: none;
       border-radius: ${({theme}) => theme.radius.sm};
+      background-color: ${({theme}) => theme.backgroundColors.body};
     }
   }
 
