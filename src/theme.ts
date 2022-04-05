@@ -3,7 +3,7 @@ import { DefaultTheme } from "styled-components";
 const colors = {
   colors: {
     main:      '#F27013',
-    secondary: '#BABABA',
+    secondary: '#4F4F4F',
     danger:    '#D91136',
     info:      '#117FD9',
     warning:   '#c9a110',
@@ -11,7 +11,7 @@ const colors = {
   },
   alphaColors: {
     main:      'rgba(242, 112, 19,  .25)',
-    secondary: 'rgba(186, 186, 186, .25)',
+    secondary: 'rgba(79, 79, 79, .25)',
     danger:    'rgba(217, 17,  54,  .25)',
     info:      'rgba(17,  127, 217, .25)',
     warning:   'rgba(201, 161, 16,  25)',
