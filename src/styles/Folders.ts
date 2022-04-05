@@ -3,8 +3,8 @@ import styled from "styled-components";
 const StyledFoldersContainer = styled.section`
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 5px;
 `;
 
 export const StyledFolderItemIcon = styled.div`
@@ -17,14 +17,16 @@ export const StyledFolderItemIcon = styled.div`
 export const StyledFolderItemName = styled.div`
   flex: initial;
   width: 100%;
+
   font-size: 1rem;
   font-weight: 300;
-  /* white-space: nowrap; */
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
 export const StyledFolderItem = styled.div`
+  width: 100%;
   position: relative;
   padding: 5px;
   border: 2px solid ${({theme}) => theme.backgroundColors.secondary};
@@ -34,7 +36,7 @@ export const StyledFolderItem = styled.div`
   box-shadow: ${({theme}) => theme.shades.sm};
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   gap: 10px;
   transition: all .15s ease-in-out;
 

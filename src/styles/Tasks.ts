@@ -92,15 +92,18 @@ export const StyledFooterTask = styled.footer`
   display: flex;
   align-items: center;
   gap: 5px;
-  /* padding-left: 2rem; */
 
   & span {
     background-color: ${({theme}) => theme.colors.secondary};
     color: white;
-    padding: 0 3px;
+    padding: 0 5px;
     border-radius: ${({theme}) => theme.radius.xs};
     display: inline-flex;
     align-items: center;
+    
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 
     &.success {
       background-color: ${({theme}) => theme.colors.success};
