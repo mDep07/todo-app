@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { motion, usePresence, AnimatePresence } from 'framer-motion';
+import { motion, usePresence } from 'framer-motion';
 import moment from 'moment';
 import { IoClose, IoCheckmark, IoAlert, IoFolderOutline } from 'react-icons/io5';
 
