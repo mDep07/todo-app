@@ -1,4 +1,5 @@
 import React from 'react'
+import { AnimatePresence } from 'framer-motion';
 
 import { ITask } from '../../interfaces/task';
 
@@ -15,17 +16,19 @@ export default function TasksList({ tasks, remove, update }: TasksListParams) {
   return (
     <StyledTasksContainer>
       <StyledTasksList>
-        {
-          tasks.map(task => (
-            <Task
-              key={task.id} 
-              task={task}
-              removed={() => remove(task.id)} 
-              finished={(finish) => update(task.id, { finish })}
-              makeImportant={(important) => update(task.id, { important })}
-            />
-          ))
-        }
+        <AnimatePresence>
+          {
+            tasks.map((task, index) => (
+              <Task
+                key={task.id} 
+                task={task}
+                removed={() => remove(task.id)} 
+                finished={(finish) => update(task.id, { finish })}
+                makeImportant={(important) => update(task.id, { important })}
+              />
+            ))
+          }
+        </AnimatePresence>
       </StyledTasksList>
     </StyledTasksContainer>  
   )
