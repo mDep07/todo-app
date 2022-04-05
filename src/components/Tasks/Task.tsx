@@ -1,5 +1,6 @@
-import moment from 'moment';
 import React, { useState } from 'react'
+import moment from 'moment';
+import { motion, AnimatePresence } from 'framer-motion';
 import { IoClose, IoCheckmark, IoAlert, IoFolderOutline } from 'react-icons/io5';
 
 import { ITask } from "../../interfaces/task";
@@ -56,15 +57,7 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
           }
         </span>
       </header>
-      {
-        showDetails && 
-        <StyledDetailsTask>
-          <small>
-            {showDateFormat(task.create_date, task.finished_date)}
-          </small>
-          { !task.finished && task.expiration_date && <small className="expired">Expires {moment(task.expiration_date).toNow()}</small> }
-        </StyledDetailsTask>
-      }
+      <Details show={showDetails} task={task} />
       <StyledFooterTask>
         {
           task.folderId && task.folder && 
@@ -90,4 +83,16 @@ const showDateFormat = (startDate: string, endDate?: string): string => {
     resultDate += ` • ${endDateFormat}`
   }
   return resultDate
+}
+
+const Details = ({ show, task }: { show: boolean, task: ITask }) => {
+
+  return (
+    <StyledDetailsTask open={show}>
+      <small>
+        {showDateFormat(task.create_date, task.finished_date)}
+      </small>
+      { !task.finished && task.expiration_date && <small className="expired">Expires {moment(task.expiration_date).toNow()}</small> }
+    </StyledDetailsTask>
+  )
 }

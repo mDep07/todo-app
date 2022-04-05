@@ -1,4 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const add = keyframes`
+  0%: {
+    opacity: 0;
+    x: 100
+  }
+  100% {
+    opacity: 1;
+    x: 0
+  }
+`
 
 const StyledTasksContainer = styled.section`
   margin-top: 1rem;
@@ -20,6 +31,8 @@ export const StyledTasksItem = styled.li<{ checked?: boolean, highlight?: boolea
   box-shadow: ${({theme}) => theme.shades.sm};
   background-color: ${({theme}) => theme.backgroundColors.secondary};
   transition: all .15s ease-in-out;
+
+  animation: ${add} 1s linear;
   
   &:hover {
     box-shadow: ${({theme}) => theme.shades.md};
@@ -66,9 +79,15 @@ export const StyledButtonCheck = styled.button<{ checked?: boolean }>`
   place-content: center;
 `;
 
-export const StyledDetailsTask = styled.section`
-  margin: .25rem 0;
-  padding: .25rem;
+export const StyledDetailsTask = styled.section<{open: boolean}>`
+  margin: ${({open}) => open ? '.25rem 0' : 0};
+  padding: ${({open}) => open ? '.25rem' : 0};
+  overflow: hidden;
+  height: ${({open}) => open ? 'auto' : 0};
+  opacity: ${({open}) => open ? 1 : 0};
+  transition: all .15s ease-in-out, opacity .35s ease-in-out;
+
+
 
   & small {
     display: block;

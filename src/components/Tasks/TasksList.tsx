@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ITask } from "../../interfaces/task";
+import { ITask } from '../../interfaces/task';
 
 import Task from './Task';
 
@@ -17,7 +17,7 @@ export default function TasksList({ tasks, remove, update }: TasksListParams) {
       <StyledTasksList>
         {
           tasks.map(task => (
-            <Task 
+            <Task
               key={task.id} 
               task={task}
               removed={() => remove(task.id)} 
