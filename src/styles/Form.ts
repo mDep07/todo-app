@@ -25,8 +25,42 @@ export const StyledFormControl = styled.div`
 
 export const StyledFooterForm = styled.footer`
   display: flex;
+  flex-direction: column;
   justify-content: end;
-  gap: 10px
+  gap: 10px;
+
+  & .actions {
+    display: flex;
+    justify-content: end;
+    gap: 10px
+  }
+`;
+
+export const StyledFooterConfig = styled.section`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+  & div {
+    display: flex;
+    flex-direction: column;
+    & label {
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    & input,
+    & select {
+      padding: 5px;
+      outline: none;
+      border: none;
+      border-radius: ${({theme}) => theme.radius.sm};
+    }
+  }
+
+  @media(max-width: 450px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export default StyledForm;

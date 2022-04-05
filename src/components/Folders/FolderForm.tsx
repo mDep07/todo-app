@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useFormik } from 'formik';
 import { IFolder } from '../../interfaces/folder';
 
@@ -35,9 +34,11 @@ export default function FolderForm({ create }: FolderFormParams) {
         />
       </StyledFormControl>
       <StyledFooterForm>
-        <StyledButton type="submit">
-          Create
-        </StyledButton>
+        <section className="actions">
+          <StyledButton type="submit">
+            Create
+          </StyledButton>
+        </section>
       </StyledFooterForm>
     </StyledForm>
   )

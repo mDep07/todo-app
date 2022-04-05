@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import moment from 'moment';
+
 import { ITask } from '../../interfaces/task';
 import { IFolder } from '../../interfaces/folder';
 
-import StyledForm, { StyledFooterForm, StyledFormControl } from '../../styles/Form';
-import StyledButton from '../../styles/Button';
+import StyledForm, { StyledFooterForm, StyledFormControl, StyledFooterConfig } from '../../styles/Form';
+import StyledButton, { StyledIconButton } from '../../styles/Button';
+
+import { IoSettingsSharp } from 'react-icons/io5'
 
 type TaskFormParams = {
   create: (task: ITask) => void;
@@ -21,6 +25,8 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
       finished: false,
       important: false,
       folderId: '',
+      expiration_date: '',
+      showMoreConfig: false
     },
     onSubmit: (values, formikBag) => {
       const newTask: ITask = { ...values }
@@ -52,31 +58,60 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
         showButtons &&
         <StyledFooterForm>
           {
-            foldersList.length > 0 &&
-            <select
-              name="folderId" 
-              value={formik.values.folderId}
-              onChange={formik.handleChange}
-            >
-              <option value="">-- None --</option>
+            formik.values.showMoreConfig && 
+            <StyledFooterConfig>
+              <div>
+                <label htmlFor="folderId">Expires in</label> 
+                <input
+                  type="datetime-local"
+                  id="expiration_date"
+                  min={moment().format('yyyy-DD-MMTHH:MM')}
+                  max={moment().add(1, 'days').format('yyyy-DD-MMTHH:MM')}
+                  {...formik.getFieldProps('expiration_date')} 
+                />
+              </div>
               {
-                foldersList.map(folder => (
-                  <option value={folder.id} key={folder.id}>{folder.name}</option>
-                ))
+                foldersList.length > 0 &&
+                <div>
+                  <label htmlFor="folderId">Select folder</label> 
+                  <select
+                    id="folderId" 
+                    name="folderId" 
+                    value={formik.values.folderId}
+                    onChange={formik.handleChange}
+                  >
+                    <option value="">-- None --</option>
+                    {
+                      foldersList.map(folder => (
+                        <option value={folder.id} key={folder.id}>{folder.name}</option>
+                      ))
+                    }
+                  </select>
+                </div> 
               }
-            </select>
-          }          
-          <StyledButton 
-            checked={formik.values.important} 
-            type="button" 
-            color="info" 
-            onClick={() => formik.setFieldValue('important', !formik.values.important)}
-          >
-            Make important
-          </StyledButton>
-          <StyledButton type="submit">
-            Create
-          </StyledButton>
+            </StyledFooterConfig>
+          }
+          <section className="actions">
+            <StyledIconButton 
+              checked={formik.values.showMoreConfig} 
+              type="button"
+              color="secondary"
+              onClick={() => formik.setFieldValue('showMoreConfig', !formik.values.showMoreConfig)}
+            >
+              <IoSettingsSharp />
+            </StyledIconButton>                      
+            <StyledButton 
+              checked={formik.values.important} 
+              type="button" 
+              color="info" 
+              onClick={() => formik.setFieldValue('important', !formik.values.important)}
+            >
+              Make important
+            </StyledButton>
+            <StyledButton type="submit">
+              Create
+            </StyledButton>
+          </section>
         </StyledFooterForm>
       }
     </StyledForm>

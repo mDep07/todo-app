@@ -45,6 +45,7 @@ export const StyledTasksItem = styled.li<{ checked?: boolean, highlight?: boolea
       border: none;
       color: ${({theme, checked}) => checked ? theme.text.secondary : theme.text.main};
       ${({checked}) => checked ? 'text-decoration: line-through' : ''};
+      font-weight: 600;
     }
   }
 `;
@@ -72,20 +73,29 @@ export const StyledDetailsTask = styled.section`
   & small {
     display: block;
     font-size: 12px;
-    color: ${({theme}) => theme.text.secondary}
+    color: ${({theme}) => theme.text.secondary};
+
+    &.expired {
+      font-size: 14px;
+      color: ${({theme}) => theme.colors.warning};
+    }
+  }
+
+  & p {
+    margin: 5px 0
   }
 `;
 
 
 export const StyledFooterTask = styled.footer`
-  font-size: 10px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   gap: 5px;
   /* padding-left: 2rem; */
 
   & span {
-    background-color: ${({theme}) => theme.colors.main};
+    background-color: ${({theme}) => theme.colors.secondary};
     color: white;
     padding: 0 3px;
     border-radius: ${({theme}) => theme.radius.xs};
@@ -102,6 +112,10 @@ export const StyledFooterTask = styled.footer`
 
     &.danger {
       background-color: ${({theme}) => theme.colors.danger};
+    }
+
+    &.warning {
+      background-color: ${({theme}) => theme.colors.warning};
     }
   }
 `;

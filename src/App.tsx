@@ -18,10 +18,12 @@ function App() {
     const savedTheme = localStorage.getItem('mode');
     if(savedTheme) {
       setTheme(savedTheme)
+      document.documentElement.style.setProperty('--theme', savedTheme);
     } else {
       const matchedDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if(matchedDarkTheme) {
         setTheme('dark')
+        document.documentElement.style.setProperty('--theme', 'dark');
       }
     }
   }, [])
@@ -29,6 +31,7 @@ function App() {
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
     localStorage.setItem('mode', theme === 'light' ? 'dark' : 'light')
+    document.documentElement.style.setProperty('--theme', theme === 'light' ? 'dark' : 'light')
   }
 
   const getTheme = () => theme === 'light' ? light : dark;

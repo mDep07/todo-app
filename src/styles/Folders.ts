@@ -19,6 +19,9 @@ export const StyledFolderItemName = styled.div`
   width: 100%;
   font-size: 1rem;
   font-weight: 300;
+  /* white-space: nowrap; */
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledFolderItem = styled.div`

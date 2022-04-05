@@ -27,7 +27,8 @@ export default class TasksService {
     const newTask: ITask = { 
       id: uuidv4(), 
       title: task.title, 
-      create_date: moment().format(), 
+      create_date: moment().format(),
+      expiration_date: task.expiration_date, 
       finished: false, 
       task_id: task.task_id, 
       important: task.important,

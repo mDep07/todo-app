@@ -62,16 +62,18 @@ export default function Task({ task, removed, finished, makeImportant }: TaskPar
           <small>
             {showDateFormat(task.create_date, task.finished_date)}
           </small>
+          { !task.finished && task.expiration_date && <small className="expired">Expires {moment(task.expiration_date).toNow()}</small> }
         </StyledDetailsTask>
       }
       <StyledFooterTask>
         {
           task.folderId && task.folder && 
-          <span className="">
+          <span>
             <IoFolderOutline style={{ marginRight: 5 }} />
             {task.folder.name}
           </span>
         }
+        {!task.finished && task.expiration_date && moment().isSameOrAfter(task.expiration_date) && <span className="warning">Expired</span>}
         {task.finished && <span className="success">Finished</span>}
         {task.important && <span className="info">Important</span>}
       </StyledFooterTask>
