@@ -7,9 +7,16 @@ export interface ITask {
   finished: boolean;
   task_id?: string;
   finished_date?: string;
-  expiration_date?: string;
   important?: boolean;
+  expiration_date?: string;
   folderId?: string;
   folder?: IFolder;
+  tagsId?: string[];
+}
+
+export interface IAdvancedTask extends ITask {
+  folderId?: string;
+  folder?: IFolder;
+  expiration_date?: string;
   tagsId?: string[];
 }

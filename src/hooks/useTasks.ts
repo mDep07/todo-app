@@ -41,10 +41,12 @@ export default function useTasks() {
       }
       case 'update': {
         const updatedTask = payload;
+        
+        const orderedTasks = orderTasks(state.tasks.map(task => task.id === updatedTask.id ? { ...updatedTask } : task));
 
         return {
           ...state,
-          tasks: state.tasks.map(task => task.id === updatedTask.id ? { ...updatedTask } : task)
+          tasks: orderedTasks
         };
       }
       default:

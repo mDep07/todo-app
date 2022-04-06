@@ -38,7 +38,7 @@ export const StyledFolderItem = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  transition: all .15s ease-in-out;
+  /* transition: all .15s ease-in-out; */
 
   &:hover {
     border-color: ${({theme}) => theme.colors.main};

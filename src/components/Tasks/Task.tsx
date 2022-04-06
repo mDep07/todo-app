@@ -131,7 +131,7 @@ const Footer = ({ task }: { task: ITask }) => {
           }}
         >
           <IoFolderOutline style={{ marginRight: 5 }} />
-          {task.folder.name}
+          {task.folder.title}
         </motion.span>
       }
       {!task.finished && task.expiration_date && moment().isSameOrAfter(task.expiration_date) && <span className="warning">Expired</span>}

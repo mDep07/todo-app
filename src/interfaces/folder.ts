@@ -1,5 +1,5 @@
 export interface IFolder {
   id: string;
-  name: string;
+  title: string;
   create_date: string;
 }

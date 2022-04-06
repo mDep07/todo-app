@@ -28,7 +28,7 @@ export default class FoldersService {
     
     const newFolder: IFolder = { 
       id: uuidv4(), 
-      name: folder.name, 
+      title: folder.title, 
       create_date: moment().format(),
     };
     

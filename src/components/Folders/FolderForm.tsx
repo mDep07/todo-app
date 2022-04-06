@@ -12,7 +12,7 @@ export default function FolderForm({ create }: FolderFormParams) {
   const formik = useFormik({
     initialValues: {
       id: '',
-      name: '',
+      title: '',
       create_date: ''
     },
     onSubmit: (values, formikBag) => {
@@ -30,7 +30,7 @@ export default function FolderForm({ create }: FolderFormParams) {
           autoComplete="off"
           type="text" 
           placeholder="Add new folder"
-          {...formik.getFieldProps('name')} 
+          {...formik.getFieldProps('title')} 
         />
       </StyledFormControl>
       <StyledFooterForm>

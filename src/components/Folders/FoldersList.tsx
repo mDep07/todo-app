@@ -59,7 +59,7 @@ const FolderItem = ({ folder, removed }: { folder: IFolder, removed: (id: string
           <IoFolderOutline />
         </StyledFolderItemIcon>
         <StyledFolderItemName>
-          {folder.name}
+          {folder.title}
         </StyledFolderItemName>
         <StyledIconButton style={{ zIndex: 2 }} color="danger" onClick={() => removed(folder.id)} title="Delete">
           <IoClose />

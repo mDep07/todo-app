@@ -83,7 +83,7 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
                     <option value="">-- None --</option>
                     {
                       foldersList.map(folder => (
-                        <option value={folder.id} key={folder.id}>{folder.name}</option>
+                        <option value={folder.id} key={folder.id}>{folder.title}</option>
                       ))
                     }
                   </select>
