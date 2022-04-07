@@ -1,26 +1,33 @@
 import { Reducer, useReducer } from "react";
 
 import { ITask } from "../interfaces/task";
-import TasksService from "../services/tasks";
 import { orderTasks } from "../utils/orderTasks";
 
-export default function useTasks() {
-
-  const Tasks = new TasksService();
+export default function useTasks(initialState: ITask[]) {
 
   type TState = { 
     tasks: ITask[] 
   };
 
-  type TAction = { type: 'add' | 'remove' | 'update', payload: ITask }
+  type TAction = { type: 'add' | 'remove' | 'update', payload: ITask } | { type: 'set', payload: ITask[] }
 
   const reducer: Reducer<TState, TAction> = (state, action): TState => {
     const { type, payload } = action;
 
     switch(type) {
+      case 'set': {
+        const tasks = payload as ITask[];
+        
+        const orderedTasks = orderTasks([...tasks]);
+
+        return {
+          ...state,
+          tasks: orderedTasks
+        }
+      }
       case 'add': {
         const { tasks } = state;
-        const newTask = payload;
+        const newTask = payload as ITask;
         
         const orderedTasks = orderTasks([...tasks, newTask]);
 
@@ -30,7 +37,7 @@ export default function useTasks() {
         }
       }
       case 'remove': {
-        const removedTask = payload;
+        const removedTask = payload as ITask;
         
         const tasksFiltered = state.tasks.filter(task => task.id !== removedTask.id)
 
@@ -40,7 +47,7 @@ export default function useTasks() {
         };
       }
       case 'update': {
-        const updatedTask = payload;
+        const updatedTask = payload as ITask; 
         
         const orderedTasks = orderTasks(state.tasks.map(task => task.id === updatedTask.id ? { ...updatedTask } : task));
 
@@ -54,7 +61,5 @@ export default function useTasks() {
     }
   }
 
-  const tasks = Tasks.getAll();
-
-  return useReducer(reducer, { tasks });
+  return useReducer(reducer, { tasks: initialState });
 }

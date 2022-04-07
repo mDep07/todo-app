@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { motion, usePresence } from 'framer-motion';
 import moment from 'moment';
 import { IoClose, IoCheckmark, IoAlert, IoFolderOutline } from 'react-icons/io5';
@@ -15,7 +15,7 @@ type TaskParams = {
   makeImportant: (important: boolean) => void;
 }
 export default function Task({ task, removed, finished, makeImportant }: TaskParams) {
-
+  
   const [showDetails, setShowDetails] = useState(false)
   const [isPresent, safeToRemove] = usePresence()
 

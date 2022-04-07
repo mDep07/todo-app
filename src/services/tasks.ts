@@ -11,8 +11,12 @@ export default class TasksService {
     this.KEY_ITEMS = 'tasks';
   }
 
-  getAll() {
+  getAll(folderId?: string) {
     const tasks: ITask[] = JSON.parse(localStorage.getItem(this.KEY_ITEMS) || '[]');
+    if(folderId) {
+      const filteredTasks = tasks.filter(task => task.folderId === folderId);
+      return filteredTasks
+    }
     return tasks;
   }
 

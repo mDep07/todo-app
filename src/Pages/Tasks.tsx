@@ -1,38 +1,35 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { ITask } from "../interfaces/task";
 
 import TaskForm from "../components/Tasks/TaskForm"
 import TasksList from "../components/Tasks/TasksList";
+import TasksFilters from "../components/Tasks/TasksFilters";
 import useTasks from "../hooks/useTasks";
 import TasksService from "../services/tasks";
 import FoldersService from '../services/folders';
 
+const _tasks = new TasksService();
+const _folders = new FoldersService();
+
 export default function Tasks() {
+  const { folderId } = useParams();
   
-  const Tasks = new TasksService();
-  const Folders = new FoldersService();
+  const [state, dispatch] = useTasks(_tasks.getAll(folderId));
 
-  const [state, dispatch] = useTasks();
-  const params = useParams();
-
-
-  useEffect(() => {
-    const { folderId } = params;
-    if(folderId) {
-      console.log({folderId})
-    }
-
-  }, [params])
+  // useEffect(() => {
+  //   if(folderId) {
+  //     setFilter(prevState => ({ ...prevState, folder: _folders.getById(folderId) }))
+  //   }
+  // }, [folderId])
 
   const handleCreate = (task: ITask) => {
-    const newTask = Tasks.add(task);
+    const newTask = _tasks.add(task);
     dispatch({ type: 'add', payload: newTask })
   }
   
   const handleRemove = (taskId: string) => {
-    const removedTask = Tasks.remove(taskId);
+    const removedTask = _tasks.remove(taskId);
     if(!removedTask) {
       return
     }
@@ -41,7 +38,7 @@ export default function Tasks() {
   }
 
   const handleUpdate = (taskId: string, data: { finish?: boolean, important?: boolean }) => {
-    const updatedTask = Tasks.update(taskId, data);
+    const updatedTask = _tasks.update(taskId, data);
     if(!updatedTask) {
       return
     }
@@ -50,7 +47,8 @@ export default function Tasks() {
   
   return (
     <section style={{ padding: '0 1rem' }}>
-      <TaskForm create={handleCreate} foldersList={Folders.getAll()} />
+      <TasksFilters setTasks={(tasks) => dispatch({ type: 'set', payload: tasks })} filters={{ folderId }} />
+      <TaskForm create={handleCreate} foldersList={_folders.getAll()} />
       <TasksList 
         tasks={state.tasks} 
         remove={handleRemove}

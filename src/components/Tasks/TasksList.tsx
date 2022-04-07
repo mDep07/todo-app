@@ -13,12 +13,13 @@ type TasksListParams = {
   update: (taskId: string, data: { finish?: boolean, important?: boolean }) => void;
 }
 export default function TasksList({ tasks, remove, update }: TasksListParams) {
+  
   return (
     <StyledTasksContainer>
       <StyledTasksList>
         <AnimatePresence>
           {
-            tasks.map((task, index) => (
+            tasks.map(task => (
               <Task
                 key={task.id} 
                 task={task}
