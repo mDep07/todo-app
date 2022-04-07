@@ -2,6 +2,12 @@ import styled from 'styled-components';
 
 const StyledTasksContainer = styled.section`
   margin-top: 1rem;
+  height: 85vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const StyledTasksList = styled.ul`
