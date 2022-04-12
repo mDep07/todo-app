@@ -2,12 +2,16 @@ import { IFolder } from '../interfaces/folder';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
+import TasksService from './tasks'; 
+
 export default class FoldersService {
 
   private KEY_ITEMS: string;
+  private Tasks;
 
   constructor() {
     this.KEY_ITEMS = 'folders';
+    this.Tasks = new TasksService();
   }
 
   getAll() {
@@ -41,6 +45,11 @@ export default class FoldersService {
     const folders = this.getAll();
     const folder = folders.find(task => task.id === id);
     if(!folder) {
+      return
+    }
+
+    const tasksInFolder = this.Tasks.getAll(folder.id);
+    if(tasksInFolder.length > 0) {
       return
     }
 
