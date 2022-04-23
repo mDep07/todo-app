@@ -5,7 +5,7 @@ import { ITask } from '../../interfaces/task';
 
 import Task from './Task';
 
-import StyledTasksContainer, { StyledTasksList } from '../../styles/Tasks'
+import { StyledTasksList } from '../../styles/Tasks'
 
 type TasksListParams = {
   tasks: ITask[],
@@ -15,7 +15,7 @@ type TasksListParams = {
 export default function TasksList({ tasks, remove, update }: TasksListParams) {
   
   return (
-    <StyledTasksContainer>
+    <section style={{ marginTop: 10, marginBottom: 10 }}>
       <StyledTasksList>
         <AnimatePresence>
           {
@@ -31,6 +31,6 @@ export default function TasksList({ tasks, remove, update }: TasksListParams) {
           }
         </AnimatePresence>
       </StyledTasksList>
-    </StyledTasksContainer>  
+    </section>  
   )
 }
