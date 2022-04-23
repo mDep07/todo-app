@@ -1,9 +1,22 @@
 import styled from 'styled-components';
 
+
 const StyledTasksContainer = styled.section`
-  margin-top: 1rem;
-  height: 85vh;
+  position: relative;
+  padding: 0 1rem;
+  height: 92vh;
   overflow-y: scroll;
+
+  &::after {
+    content: '';
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1rem;
+    background-color: red;
+    z-index: 999;
+  }
 
   &::-webkit-scrollbar {
     display: none;

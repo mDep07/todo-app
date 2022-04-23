@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: ${({theme}) => theme.backgroundColors.main};
   border: 1px solid ${({theme}) => theme.backgroundColors.secondary};
   border-radius: ${({theme}) => theme.radius.md};
   padding: .5rem;
