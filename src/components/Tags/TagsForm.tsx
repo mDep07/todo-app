@@ -28,7 +28,7 @@ export default function TagForm({ create }: TagFormParams) {
           minLength={3}
           autoComplete="off"
           type="text" 
-          placeholder="Add new folder"
+          placeholder="Add new tag"
           {...formik.getFieldProps('name')} 
         />
       </StyledFormControl>
