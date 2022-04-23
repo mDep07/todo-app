@@ -9,6 +9,8 @@ import useTasks from "../hooks/useTasks";
 import TasksService from "../services/tasks";
 import FoldersService from '../services/folders';
 
+import StyledTasksContainer from '../styles/Tasks';
+
 const _tasks = new TasksService();
 const _folders = new FoldersService();
 
@@ -46,7 +48,7 @@ export default function Tasks() {
   }
   
   return (
-    <section style={{ padding: '0 1rem' }}>
+    <StyledTasksContainer>
       <TasksFilters setTasks={(tasks) => dispatch({ type: 'set', payload: tasks })} filters={{ folderId }} />
       <TaskForm create={handleCreate} foldersList={_folders.getAll()} />
       <TasksList 
@@ -54,6 +56,6 @@ export default function Tasks() {
         remove={handleRemove}
         update={handleUpdate}
       />
-    </section>
+    </StyledTasksContainer>
   )
 }
