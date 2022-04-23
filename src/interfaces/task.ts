@@ -9,6 +9,7 @@ export interface ITask {
   finished_date?: string;
   important?: boolean;
   expiration_date?: string;
+  start_date?: string;
   folderId?: string;
   folder?: IFolder;
   tagsId?: string[];

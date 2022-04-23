@@ -26,6 +26,7 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
       important: false,
       folderId: '',
       expiration_date: '',
+      start_date: '',
       showMoreConfig: false
     },
     onSubmit: (values, formikBag) => {
@@ -61,12 +62,22 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
             formik.values.showMoreConfig && 
             <StyledFooterConfig>
               <div>
-                <label htmlFor="folderId">Expires in</label> 
+                <label htmlFor="start_date">Start in</label> 
+                <input
+                  type="datetime-local"
+                  id="start_date"
+                  min={moment().format('yyyy-DD-MMTHH:MM')}
+                  // max={moment().add(1, 'days').format('yyyy-DD-MMTHH:MM')}
+                  {...formik.getFieldProps('start_date')} 
+                />
+              </div>
+              <div>
+                <label htmlFor="expiration_date">Expires in</label> 
                 <input
                   type="datetime-local"
                   id="expiration_date"
                   min={moment().format('yyyy-DD-MMTHH:MM')}
-                  max={moment().add(1, 'days').format('yyyy-DD-MMTHH:MM')}
+                  // max={moment().add(1, 'days').format('yyyy-DD-MMTHH:MM')}
                   {...formik.getFieldProps('expiration_date')} 
                 />
               </div>

@@ -83,6 +83,5 @@ export default class TasksService {
     localStorage.setItem(this.KEY_ITEMS, JSON.stringify(orderedTasks));
 
     return updatedTask;
-
   }
 }
