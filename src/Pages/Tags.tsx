@@ -1,7 +1,14 @@
+import React from 'react';
+
+import { ITag } from '../interfaces/tag'
+
+import TagsForm from '../components/Tags/TagsForm';
+
 export default function Tags() {
+
   return (
     <section style={{ padding: '0 1rem' }}>
-      <h3>Tags</h3>
+      <TagsForm create={tag => console.log({tag})} />
     </section>
   )
 }
