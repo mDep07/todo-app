@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
-const StyledFoldersContainer = styled.section`
+const StyledListContainer = styled.section`
   margin-top: 1rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(150px, 1fr));
   gap: 5px;
 `;
 
-export const StyledFolderItemIcon = styled.div`
+export const StyledItemIcon = styled.div`
   flex: initial;
   font-size: 1.25rem;
   display: flex;
   align-items: center;
 `;
 
-export const StyledFolderItemName = styled.div`
+export const StyledItemName = styled.div`
   flex: initial;
   width: 100%;
 
@@ -25,7 +25,7 @@ export const StyledFolderItemName = styled.div`
   text-overflow: ellipsis;
 `;
 
-export const StyledFolderItem = styled.div`
+export const StyledItem = styled.div`
   width: 100%;
   position: relative;
   padding: 5px;
@@ -43,10 +43,10 @@ export const StyledFolderItem = styled.div`
   &:hover {
     border-color: ${({theme}) => theme.colors.main};
 
-    & ${StyledFolderItemIcon} {
+    & ${StyledItemIcon} {
       color: ${({theme}) => theme.colors.main};
     }
   }
 `;
 
-export default StyledFoldersContainer;
+export default StyledListContainer;

@@ -1,26 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { motion, usePresence, AnimatePresence } from 'framer-motion';
-import { IoFolderOutline, IoClose } from 'react-icons/io5'
+import { IoPricetagOutline, IoClose } from 'react-icons/io5'
 
-import { IFolder } from '../../interfaces/folder';
+import { ITag } from '../../interfaces/tag';
 
 import { StyledIconButton } from '../../styles/Button'
 import StyledListContainer, { StyledItem, StyledItemIcon, StyledItemName } from '../../styles/List'
 
-type FoldersListParams = {
-  folders: IFolder[],
+type TagsListParams = {
+  tags: ITag[],
   removed: (id: string) => void
 }
-export default function FoldersList({ folders, removed }: FoldersListParams) {
+export default function TagsList({ tags, removed }: TagsListParams) {
   
 
   return (
     <StyledListContainer>
       <AnimatePresence>
         {
-          folders.map(folder => (
-            <FolderItem key={folder.id} folder={folder} removed={removed} /> 
+          tags.map(tag => (
+            <TagItem key={tag.id} tag={tag} removed={removed} /> 
           ))
         }
       </AnimatePresence>
@@ -28,7 +28,7 @@ export default function FoldersList({ folders, removed }: FoldersListParams) {
   )
 }
 
-const FolderItem = ({ folder, removed }: { folder: IFolder, removed: (id: string) => void }) => {
+const TagItem = ({ tag, removed }: { tag: ITag, removed: (id: string) => void }) => {
   const [isPresent, safeToRemove] = usePresence()
 
   return (
@@ -45,7 +45,7 @@ const FolderItem = ({ folder, removed }: { folder: IFolder, removed: (id: string
     >
       <StyledItem>
         <Link 
-          to={`/tasks/folder/${folder.id}`} 
+          to={`/tasks/folder/${tag.id}`} 
           style={{ 
             position: 'absolute', 
             width: '100%', 
@@ -56,12 +56,12 @@ const FolderItem = ({ folder, removed }: { folder: IFolder, removed: (id: string
           }} 
         />
         <StyledItemIcon>
-          <IoFolderOutline />
+          <IoPricetagOutline />
         </StyledItemIcon>
         <StyledItemName>
-          {folder.title}
+          {tag.name}
         </StyledItemName>
-        <StyledIconButton style={{ zIndex: 2 }} color="danger" onClick={() => removed(folder.id)} title="Delete">
+        <StyledIconButton style={{ zIndex: 2 }} color="danger" onClick={() => removed(tag.id)} title="Delete">
           <IoClose />
         </StyledIconButton>
       </StyledItem>

@@ -5,6 +5,7 @@ import useTags from '../hooks/useTags';
 
 import TagsService from '../services/tags';
 import TagsForm from '../components/Tags/TagsForm';
+import TagsList from '../components/Tags/TagsList';
 
 export default function Tags() {
   const [state, dispatch] = useTags();
@@ -28,11 +29,7 @@ export default function Tags() {
   return (
     <section style={{ padding: '0 1rem' }}>
       <TagsForm create={handleCreate} />
-      {
-        state.tags.map(tag => (
-          <p>{tag.name}</p>
-        ))
-      }
+      <TagsList tags={state.tags} removed={handleRemove} />
     </section>
   )
 }
