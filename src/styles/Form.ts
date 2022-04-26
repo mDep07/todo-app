@@ -11,7 +11,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  box-shadow: ${({theme}) => theme.shades.md}
+  box-shadow: ${({theme}) => theme.shades.md}, 0 -10px ${({theme}) => theme.backgroundColors.main}
 `;
 
 export const StyledFormControl = styled.div`
@@ -60,11 +60,14 @@ export const StyledFooterConfig = styled.section`
       border: none;
       border-radius: ${({theme}) => theme.radius.sm};
       background-color: ${({theme}) => theme.backgroundColors.body};
+      &:hover {
+        cursor: pointer
+      }
     }
   }
 
   @media(max-width: 450px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 

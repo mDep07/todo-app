@@ -25,8 +25,8 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
       finished: false,
       important: false,
       folderId: '',
-      expiration_date: '',
-      start_date: '',
+      expiration_date: moment().format('yyyy-MM-DDTHH:mm'),
+      start_date: moment().format('yyyy-MM-DDTHH:mm'),
       showMoreConfig: false
     },
     onSubmit: (values, formikBag) => {
@@ -37,9 +37,16 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
           newTask.folder = {...folder};
         }
       }
+
+      if(!values.showMoreConfig) {
+        newTask.folderId =  '';
+        newTask.expiration_date = '';
+        newTask.start_date = '';
+      }
+
       create(newTask);
       formikBag.resetForm();
-    }
+    },
   });
 
   return (
@@ -66,8 +73,7 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
                 <input
                   type="datetime-local"
                   id="start_date"
-                  min={moment().format('yyyy-DD-MMTHH:MM')}
-                  // max={moment().add(1, 'days').format('yyyy-DD-MMTHH:MM')}
+                  min={moment().format('yyyy-MM-DDTHH:mm')}
                   {...formik.getFieldProps('start_date')} 
                 />
               </div>
@@ -76,8 +82,7 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
                 <input
                   type="datetime-local"
                   id="expiration_date"
-                  min={moment().format('yyyy-DD-MMTHH:MM')}
-                  // max={moment().add(1, 'days').format('yyyy-DD-MMTHH:MM')}
+                  min={moment().format('yyyy-MM-DDTHH:mm')}
                   {...formik.getFieldProps('expiration_date')} 
                 />
               </div>
