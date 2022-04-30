@@ -6,24 +6,21 @@ import TaskForm from "../components/Tasks/TaskForm"
 import TasksList from "../components/Tasks/TasksList";
 import TasksFilters from "../components/Tasks/TasksFilters";
 import useTasks from "../hooks/useTasks";
+
 import TasksService from "../services/tasks";
 import FoldersService from '../services/folders';
+import TagsService from '../services/tags';
 
 import StyledTasksContainer from '../styles/Tasks';
 
 const _tasks = new TasksService();
 const _folders = new FoldersService();
+const _tags = new TagsService();
 
 export default function Tasks() {
   const { folderId } = useParams();
   
   const [state, dispatch] = useTasks(_tasks.getAll(folderId));
-
-  // useEffect(() => {
-  //   if(folderId) {
-  //     setFilter(prevState => ({ ...prevState, folder: _folders.getById(folderId) }))
-  //   }
-  // }, [folderId])
 
   const handleCreate = (task: ITask) => {
     const newTask = _tasks.add(task);
@@ -50,7 +47,7 @@ export default function Tasks() {
   return (
     <StyledTasksContainer>
       <TasksFilters setTasks={(tasks) => dispatch({ type: 'set', payload: tasks })} filters={{ folderId }} />
-      <TaskForm create={handleCreate} foldersList={_folders.getAll()} />
+      <TaskForm create={handleCreate} foldersList={_folders.getAll()} tagsList={_tags.getAll()} />
       <TasksList 
         tasks={state.tasks} 
         remove={handleRemove}

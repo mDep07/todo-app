@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import { ITask } from '../../interfaces/task';
 import { IFolder } from '../../interfaces/folder';
+import { ITag } from '../../interfaces/tag';
 
 import StyledForm, { StyledFooterForm, StyledFormControl, StyledFooterConfig } from '../../styles/Form';
 import StyledButton, { StyledIconButton } from '../../styles/Button';
@@ -12,9 +13,10 @@ import { IoSettingsSharp } from 'react-icons/io5'
 
 type TaskFormParams = {
   create: (task: ITask) => void;
-  foldersList: IFolder[]
+  foldersList: IFolder[];
+  tagsList: ITag[];
 }
-export default function TaskForm({ create, foldersList }: TaskFormParams) {
+export default function TaskForm({ create, foldersList, tagsList }: TaskFormParams) {
   const [showButtons, setShowButtons] = useState(false);
   
   const formik = useFormik({
@@ -25,6 +27,7 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
       finished: false,
       important: false,
       folderId: '',
+      tagsId: [],
       expiration_date: moment().format('yyyy-MM-DDTHH:mm'),
       start_date: moment().format('yyyy-MM-DDTHH:mm'),
       showMoreConfig: false
@@ -40,6 +43,7 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
 
       if(!values.showMoreConfig) {
         newTask.folderId =  '';
+        newTask.tagsId = [];
         newTask.expiration_date = '';
         newTask.start_date = '';
       }
@@ -100,6 +104,25 @@ export default function TaskForm({ create, foldersList }: TaskFormParams) {
                     {
                       foldersList.map(folder => (
                         <option value={folder.id} key={folder.id}>{folder.title}</option>
+                      ))
+                    }
+                  </select>
+                </div> 
+              }
+              {
+                tagsList.length > 0 &&
+                <div>
+                  <label htmlFor="tagsId">Select Tag</label> 
+                  <select
+                    id="tagsId" 
+                    name="tagsId" 
+                    value={formik.values.tagsId}
+                    onChange={formik.handleChange}
+                  >
+                    <option value="">-- None --</option>
+                    {
+                      tagsList.map(tag => (
+                        <option value={tag.id} key={tag.id}>{tag.name}</option>
                       ))
                     }
                   </select>
