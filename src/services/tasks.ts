@@ -39,6 +39,7 @@ export default class TasksService {
       folderId: task.folderId,
       folder: task.folder,
       tagsId: task.tagsId,
+      tags: task.tags
     };
 
     const orderedTasks = orderTasks([...tasks, newTask]);

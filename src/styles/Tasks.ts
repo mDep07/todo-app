@@ -109,19 +109,20 @@ export const StyledFooterTask = styled.footer`
   font-size: 11px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  /* gap: 5px; */
 
   & span {
     background-color: ${({theme}) => theme.colors.secondary};
     color: white;
     padding: 0 5px;
-    border-radius: ${({theme}) => theme.radius.xs};
+    /* border-radius: ${({theme}) => theme.radius.xs}; */
     display: inline-flex;
     align-items: center;
     
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    transition: border .25s ease-in-out;
 
     &.success {
       background-color: ${({theme}) => theme.colors.success};
@@ -138,6 +139,19 @@ export const StyledFooterTask = styled.footer`
     &.warning {
       background-color: ${({theme}) => theme.colors.warning};
     }
+
+    &.main {
+      background-color: ${({theme}) => theme.colors.main};
+    }
+  }
+
+  & span:first-child {
+    border-top-left-radius: ${({theme}) => theme.radius.xs};
+    border-bottom-left-radius: ${({theme}) => theme.radius.xs};
+  }
+  & span:last-child {
+    border-top-right-radius: ${({theme}) => theme.radius.xs};
+    border-bottom-right-radius: ${({theme}) => theme.radius.xs};
   }
 `;
 

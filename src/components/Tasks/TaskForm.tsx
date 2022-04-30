@@ -27,13 +27,14 @@ export default function TaskForm({ create, foldersList, tagsList }: TaskFormPara
       finished: false,
       important: false,
       folderId: '',
-      tagsId: [],
+      tagsId: '',
       expiration_date: moment().format('yyyy-MM-DDTHH:mm'),
       start_date: moment().format('yyyy-MM-DDTHH:mm'),
       showMoreConfig: false
     },
     onSubmit: (values, formikBag) => {
       const newTask: ITask = { ...values }
+      
       if(values.folderId) {
         const folder = foldersList.find(f => f.id === values.folderId)
         if(folder) {
@@ -41,9 +42,16 @@ export default function TaskForm({ create, foldersList, tagsList }: TaskFormPara
         }
       }
 
+      if(values.tagsId) {
+        const tag = tagsList.find(t => t.id === values.tagsId)
+        if(tag) {
+          newTask.tags = {...tag};
+        }
+      }
+
       if(!values.showMoreConfig) {
         newTask.folderId =  '';
-        newTask.tagsId = [];
+        newTask.tagsId = '';
         newTask.expiration_date = '';
         newTask.start_date = '';
       }

@@ -1,23 +1,38 @@
 import { IFolder } from "./folder";
+import { ITag } from "./tag";
 
-export interface ITask {
+// export interface ITask {
+//   id: string;
+//   title: string;
+//   create_date: string;
+//   finished: boolean;
+//   finished_date?: string;
+//   important?: boolean;
+//   expiration_date?: string;
+//   start_date?: string;
+//   task_id?: string;
+//   folderId?: string;
+//   folder?: IFolder;
+//   tagsId?: ITag[];
+// }
+
+export interface IBasicTask {
   id: string;
   title: string;
   create_date: string;
   finished: boolean;
-  task_id?: string;
   finished_date?: string;
   important?: boolean;
-  expiration_date?: string;
-  start_date?: string;
-  folderId?: string;
-  folder?: IFolder;
-  tagsId?: string[];
 }
 
-export interface IAdvancedTask extends ITask {
+export interface IAdvancedTask {
+  expiration_date?: string;
+  start_date?: string;
+  task_id?: string;
   folderId?: string;
   folder?: IFolder;
-  expiration_date?: string;
-  tagsId?: string[];
+  tagsId?: string;
+  tags?: ITag;
 }
+
+export interface ITask extends IBasicTask, IAdvancedTask { }
