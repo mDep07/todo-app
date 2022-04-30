@@ -19,6 +19,7 @@ const _tags = new TagsService();
 
 export default function Tasks() {
   const { folderId } = useParams();
+  console.log({folderId})
   
   const [state, dispatch] = useTasks(_tasks.getAll(folderId));
 
